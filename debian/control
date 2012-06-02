@@ -1,0 +1,49 @@
+Source: haskell-invertible-syntax-poly
+Priority: extra
+Section: haskell
+Maintainer: Kei HIBINO <hibi@utmc.or.jp>
+Build-Depends: debhelper (>= 7.0),
+               haskell-devscripts (>= 0.8),
+               cdbs,
+               ghc,
+               ghc-prof,
+               libghc-partial-isomorphisms-dev,
+               libghc-partial-isomorphisms-prof
+Build-Depends-Indep: ghc-doc,
+                     libghc-partial-isomorphisms-doc
+Standards-Version: 3.9.1
+Homepage: http://twitter.com/khibino
+
+Package: libghc-invertible-syntax-poly-dev
+Architecture: any
+Depends: ${shlibs:Depends},
+         ${haskell:Depends},
+         ${misc:Depends}
+Recommends: ${haskell:Recommends}
+Suggests: ${haskell:Suggests}
+Provides: ${haskell:Provides}
+Description: Extension of invertible-syntax library.
+ .
+ This package contains the normal library files.
+
+Package: libghc-invertible-syntax-poly-prof
+Architecture: any
+Depends: ${haskell:Depends},
+         ${misc:Depends}
+Recommends: ${haskell:Recommends}
+Suggests: ${haskell:Suggests}
+Provides: ${haskell:Provides}
+Description: Extension of invertible-syntax library.
+ .
+ This package contains the libraries compiled with profiling enabled.
+
+Package: libghc-invertible-syntax-poly-doc
+Architecture: all
+Section: doc
+Depends: ${haskell:Depends},
+         ${misc:Depends}
+Recommends: ${haskell:Recommends}
+Suggests: ${haskell:Suggests}
+Description: Extension of invertible-syntax library.
+ .
+ This package contains the documentation files.

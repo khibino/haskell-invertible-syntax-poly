@@ -1,0 +1,63 @@
+
+Name:                invertible-syntax-poly
+
+Version:             0.1
+
+Synopsis:            Extension of invertible-syntax library.
+
+Description:         Extends invertible-syntax library
+                     capable to use polymorphic token.
+
+-- URL for the project homepage or repository.
+Homepage:            http://twitter.com/khibino
+
+-- The license under which the package is released.
+License:             BSD3
+
+-- The file containing the license text.
+License-file:        LICENSE
+
+-- The package author(s).
+Author:              Kei Hibino
+
+Maintainer:          Kei Hibino <ex8k.hibino@gmail.com>
+
+-- A copyright notice.
+-- Copyright:           
+
+Category:            Text
+
+Build-type:          Simple
+
+-- Extra files to be distributed with the package, such as examples or
+-- a README.
+-- Extra-source-files:  
+
+Cabal-version:       >=1.2
+
+
+Library
+  Hs-source-dirs:      src
+  -- Modules exported by the library.
+  Exposed-modules:     Control.Isomorphism.Partial.Functors,
+                       Text.Syntax.Poly.Class,
+                       Text.Syntax.Poly.Instances,
+                       Text.Syntax.Poly.Combinators,
+                       Text.Syntax.Poly.Combinators.Char,
+                       Text.Syntax.Poly,
+                       Text.Syntax.Poly.Parser.List,
+                       Text.Syntax.Poly.Parser.ReadP,
+                       Text.Syntax.Poly.Printer.List
+                       -- Text.Syntax.Parser.ReadP
+  
+  -- Packages needed in order to build this package.
+  Build-depends:         base < 5
+                       , partial-isomorphisms
+  --                     , invertible-syntax
+  
+  -- Modules not exported by this package.
+  -- Other-modules:       
+  
+  -- Extra tools (e.g. alex, hsc2hs, ...) needed to build the source.
+  -- Build-tools:         
+  
