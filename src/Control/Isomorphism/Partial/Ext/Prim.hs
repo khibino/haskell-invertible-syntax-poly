@@ -70,4 +70,5 @@ mayPrepend' iso1 iso2 = Iso f g  where
 mayPrepend :: Iso (a, b) b -> Iso (Maybe a, b) b
 mayPrepend =  (?|| id)
 
-infixr 2 ||?, ?||
+infixr 6 ||?
+infixl 6 ?||
