@@ -1,7 +1,7 @@
 
 ------------------------------------------------------------
 -- |
--- Module      : Control.Isomorphism.Partial.Functors
+-- Module      : Control.Isomorphism.Partial.Ext.Prim
 -- Copyright   : (c) Kei Hibino 2012
 -- Licese      : BSD3
 -- 
@@ -9,12 +9,12 @@
 -- Stability   : experimental
 -- Portability : unknown
 --
--- This module contains utility function for 
+-- This module contains utility functions for 
 -- Control.Isomorphism.Partial.
 ------------------------------------------------------------
 
-module Control.Isomorphism.Partial.Functors (
-  pureIso,
+module Control.Isomorphism.Partial.Ext.Prim (
+  iso,
   mayAppend',  (||?), mayAppend,
   mayPrepend', (?||), mayPrepend,
   ) where
@@ -25,8 +25,8 @@ import Control.Isomorphism.Partial.Prim (apply, unapply)
 import Control.Isomorphism.Partial.Unsafe (Iso (Iso))
 
 -- | Define a isomorphism from two pure functions.
-pureIso :: (a -> b) -> (b -> a) -> Iso a b
-pureIso f g = Iso (Just . f) (Just . g)
+iso :: (a -> b) -> (b -> a) -> Iso a b
+iso f g = Iso (Just . f) (Just . g)
 
 -- | May construct or destruct with postfix term.
 mayAppend' :: Iso (a, b) c -> Iso a c -> Iso (a, Maybe b) c

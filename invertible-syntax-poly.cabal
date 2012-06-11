@@ -39,7 +39,7 @@ Cabal-version:       >=1.2
 Library
   Hs-source-dirs:      src
   -- Modules exported by the library.
-  Exposed-modules:     Control.Isomorphism.Partial.Functors,
+  Exposed-modules:     Control.Isomorphism.Partial.Ext.Prim,
                        Text.Syntax.Poly.Class,
                        Text.Syntax.Poly.Instances,
                        Text.Syntax.Poly.Combinators,

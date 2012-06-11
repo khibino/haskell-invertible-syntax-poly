@@ -43,7 +43,7 @@ import Control.Isomorphism.Partial.Derived (foldl)
 import Control.Isomorphism.Partial.Prim
   (Iso, (<$>), inverse, element, unit, commute, ignore)
   
-import Control.Isomorphism.Partial.Functors (mayAppend, mayPrepend)
+import Control.Isomorphism.Partial.Ext.Prim (mayAppend, mayPrepend)
 
 import Text.Syntax.Poly.Class
   (ProductFunctor((<*>)), TryAlternative((<|>)),
