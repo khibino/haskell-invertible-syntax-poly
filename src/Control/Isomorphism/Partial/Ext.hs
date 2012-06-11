@@ -1,7 +1,7 @@
 
 ----------------------------------------------------------------------------
 -- |
--- Module      : Text.Syntax.Poly
+-- Module      : Control.Isomorphism.Partial.Ext
 -- Copyright   : 2012 Kei Hibino
 -- License     : BSD3
 --
@@ -11,11 +11,13 @@
 --
 ----------------------------------------------------------------------------
 
-module Text.Syntax.Poly (
+module Control.Isomorphism.Partial.Ext (
   module Exports
   ) where
 
-import Text.Syntax.Poly.Class as Exports
--- import Text.Syntax.Poly.Instances as Exports
-import Text.Syntax.Poly.Combinators as Exports
-import Text.Syntax.Poly.Combinators.Char as Exports
+-- Original definitions
+import Control.Isomorphism.Partial as Exports
+
+-- Additional definitions
+import Control.Isomorphism.Partial.Ext.Prim as Exports
+import Control.Isomorphism.Partial.Ext.Constructors as Exports
