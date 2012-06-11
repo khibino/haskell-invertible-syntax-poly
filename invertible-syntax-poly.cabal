@@ -40,6 +40,7 @@ Library
   Hs-source-dirs:      src
   -- Modules exported by the library.
   Exposed-modules:     Control.Isomorphism.Partial.Ext.Prim,
+                       Control.Isomorphism.Partial.Ext.Constructors,
                        Text.Syntax.Poly.Class,
                        Text.Syntax.Poly.Instances,
                        Text.Syntax.Poly.Combinators,
