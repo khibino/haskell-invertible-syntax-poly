@@ -43,6 +43,7 @@ Library
                        Control.Isomorphism.Partial.Ext.Constructors,
                        Control.Isomorphism.Partial.Ext,
                        Text.Syntax.Poly.Class,
+                       Text.Syntax.Poly.Type,
                        Text.Syntax.Poly.Instances,
                        Text.Syntax.Poly.Combinators,
                        Text.Syntax.Poly.Combinators.Char,

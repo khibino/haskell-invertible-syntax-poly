@@ -16,6 +16,7 @@ module Text.Syntax.Poly (
   ) where
 
 import Text.Syntax.Poly.Class as Exports
+import Text.Syntax.Poly.Type as Exports
 -- import Text.Syntax.Poly.Instances as Exports
 import Text.Syntax.Poly.Combinators as Exports
 import Text.Syntax.Poly.Combinators.Char as Exports
