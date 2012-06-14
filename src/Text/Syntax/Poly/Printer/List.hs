@@ -61,4 +61,4 @@ instance Eq tok => StreamSyntax [tok] (Printer tok) where
   string = list
 
 instance Eq tok => Syntax tok [tok] (Printer tok) where
-  token   = Printer (\t -> Just [t])
+  token  = Printer (\t -> Just [t])
