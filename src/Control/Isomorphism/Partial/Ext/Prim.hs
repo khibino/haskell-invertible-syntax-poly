@@ -17,11 +17,12 @@ module Control.Isomorphism.Partial.Ext.Prim (
   iso,
   mayAppend',  (||?), mayAppend,
   mayPrepend', (?||), mayPrepend,
+  inc, dec
   ) where
 
 import Prelude hiding (id)
 import Control.Category (id)
-import Control.Isomorphism.Partial.Prim (apply, unapply)
+import Control.Isomorphism.Partial.Prim (inverse, apply, unapply)
 import Control.Isomorphism.Partial.Unsafe (Iso (Iso))
 
 -- | Define a isomorphism from two pure functions.
@@ -41,11 +42,11 @@ mayAppend' iso1 iso2 = Iso f g  where
         (\(p, q) -> Just (p, Just q))
         (unapply iso1 x)
         
--- | Operator version of 'mayAppend''.
+-- | Operator version of `mayAppend'`.
 (||?) :: Iso (a, b) c -> Iso a c -> Iso (a, Maybe b) c
 (||?) =  mayAppend'
 
--- | Restricted version of 'mayAppend''
+-- | Restricted version of `mayAppend'`.
 mayAppend :: Iso (a, b) a -> Iso (a, Maybe b) a
 mayAppend =  (||? id)
 
@@ -62,13 +63,21 @@ mayPrepend' iso1 iso2 = Iso f g  where
         (\(p, q) -> Just (Just p, q))
         (unapply iso1 y)
 
--- | Operator version of 'mayPrepend''.
+-- | Operator version of `mayPrepend'`.
 (?||) :: Iso (a, b) c -> Iso b c -> Iso (Maybe a, b) c
 (?||) =  mayPrepend'
 
--- | Restricted version of 'mayPrepend''.
+-- | Restricted version of `mayPrepend'`.
 mayPrepend :: Iso (a, b) b -> Iso (Maybe a, b) b
 mayPrepend =  (?|| id)
 
 infixr 6 ||?
 infixl 6 ?||
+
+-- | succ and pred isomorphism.
+inc :: Enum a => Iso a a
+inc =  iso succ pred
+
+-- | inverse of `inc`
+dec :: Enum a => Iso a a
+dec = inverse inc

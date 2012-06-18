@@ -23,6 +23,7 @@ module Text.Syntax.Poly.Combinators (
   some,
   sepBy, sepBy1,
   chainl1,
+  count,
   -- * Sequencing
   (*>),
   (<*),
@@ -35,7 +36,7 @@ module Text.Syntax.Poly.Combinators (
   format
   ) where
 
-import Prelude (String, Char, Eq)
+import Prelude (String, Char, Eq, Enum(toEnum))
 
 import Control.Category ((.))
 import Control.Isomorphism.Partial.Constructors
@@ -44,7 +45,7 @@ import Control.Isomorphism.Partial.Derived (foldl)
 import Control.Isomorphism.Partial.Prim
   (Iso, (<$>), inverse, element, unit, commute, ignore)
   
-import Control.Isomorphism.Partial.Ext.Prim (mayAppend, mayPrepend)
+import Control.Isomorphism.Partial.Ext.Prim (mayAppend, mayPrepend, inc)
 
 import Text.Syntax.Poly.Class
   (ProductFunctor((<*>)), TryAlternative((<|>)),
@@ -115,6 +116,10 @@ chainl1 :: AbstractSyntax delta =>
            delta alpha -> delta beta -> Iso (alpha, (beta, alpha)) alpha -> delta alpha
 chainl1 arg op f 
   = foldl f <$> arg <*> many (op <*> arg)
+
+-- | The `count` combinator counts fixed syntax.
+count :: (Eq beta, Enum beta, AbstractSyntax delta) => delta () -> delta beta
+count p = inc <$> p *> count p <|> syntax (toEnum 0)
 
 -- | The `optional` combinator may parse \/ print passed syntax.
 optional :: AbstractSyntax delta => delta alpha -> delta (Maybe alpha)
