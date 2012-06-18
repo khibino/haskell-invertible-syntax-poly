@@ -36,7 +36,9 @@ module Text.Syntax.Poly.Combinators (
   format
   ) where
 
-import Prelude (String, Char, Eq, Enum(toEnum))
+import Prelude (String, Char, Eq, Enum(toEnum)
+                -- , foldr
+               )
 
 import Control.Category ((.))
 import Control.Isomorphism.Partial.Constructors
@@ -87,6 +89,10 @@ list []      =    syntax ()
 list (c:cs)  =    inverse (element ((), ()))
              <$>  this c
              <*>  list cs
+-- list cs = foldr
+--           (\ c -> (inverse (element ((), ())) <$>) . (this c <*>))
+--           (syntax ())
+--           cs
 
 -- | This variant of `<*>` ignores its left result.
 -- In contrast to its counterpart derived from the `Applicative` class, the ignored

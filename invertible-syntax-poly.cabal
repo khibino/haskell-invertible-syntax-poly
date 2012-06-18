@@ -33,6 +33,7 @@ Library
                         Text.Syntax.Poly.Parser.List
                         Text.Syntax.Poly.Parser.ReadP
                         Text.Syntax.Poly.Printer.List
+                        Text.Syntax.Poly.Check
                         -- Text.Syntax.Parser.ReadP
   
   -- Packages needed in order to build this package.

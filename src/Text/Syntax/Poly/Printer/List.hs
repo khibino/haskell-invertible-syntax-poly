@@ -1,6 +1,9 @@
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE FlexibleInstances #-}
 
+{-# LANGUAGE FlexibleContexts #-}
+{-# LANGUAGE Rank2Types #-}
+
 ----------------------------------------------------------------------------
 -- |
 -- Module      : Text.Syntax.Poly.Printer.List
@@ -15,7 +18,7 @@
 ----------------------------------------------------------------------------
 module Text.Syntax.Poly.Printer.List (
   -- * Syntax instance Printer type
-  Printer, runPrinter,
+  Printer, runPrinter, runPolyPrinter,
   -- * Print action
   printM
   ) where
@@ -28,6 +31,7 @@ import Text.Syntax.Poly.Class
    IsoAlternative ((<||>), empty), TryAlternative,
    AbstractSyntax (syntax), StreamSyntax (string), Syntax (token))
 import Text.Syntax.Poly.Combinators (list)
+import Text.Syntax.Poly.Type (ListSyntaxT)
 
 
 newtype Printer tok alpha =
@@ -62,3 +66,6 @@ instance Eq tok => StreamSyntax [tok] (Printer tok) where
 
 instance Eq tok => Syntax tok [tok] (Printer tok) where
   token  = Printer (\t -> Just [t])
+
+runPolyPrinter :: Eq tok => ListSyntaxT tok a -> a -> Maybe [tok]
+runPolyPrinter printer = runPrinter printer

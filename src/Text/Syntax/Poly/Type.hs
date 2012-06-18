@@ -1,4 +1,5 @@
 {-# LANGUAGE Rank2Types #-}
+{-# LANGUAGE FlexibleContexts #-}
 
 ----------------------------------------------------------------------------
 -- |
@@ -13,8 +14,10 @@
 -- Simple type synonym for `Syntax` type-class.
 ----------------------------------------------------------------------------
 
-module Text.Syntax.Poly.Type (SyntaxT) where
+module Text.Syntax.Poly.Type (
+  SyntaxT, ListSyntaxT) where
 
 import Text.Syntax.Poly.Class (Syntax)
 
 type SyntaxT tok a = Syntax tok tks delta => delta a
+type ListSyntaxT tok a = Syntax tok [tok] delta => delta a
