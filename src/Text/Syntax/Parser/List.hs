@@ -6,7 +6,7 @@
 
 ----------------------------------------------------------------------------
 -- |
--- Module      : Text.Syntax.Poly.Parser.List
+-- Module      : Text.Syntax.Parser.List
 -- Copyright   : 2012 Kei Hibino
 -- License     : BSD3
 --
@@ -16,9 +16,11 @@
 --
 -- This module includes a naive parser implementation for invertible-syntax-poly.
 ----------------------------------------------------------------------------
-module Text.Syntax.Poly.Parser.List (
+module Text.Syntax.Parser.List (
   -- * Syntax instance Parser type
-  Parser, runParser, runPolyParser
+  Parser, runParser,
+  -- * Poly- morphic wrapper of runParser
+  runPolyParser
   ) where
 
 import Control.Monad (MonadPlus(mzero, mplus))

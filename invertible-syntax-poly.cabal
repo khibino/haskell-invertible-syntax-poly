@@ -25,15 +25,13 @@ library
                         Text.Syntax.Poly.Combinators
                         Text.Syntax.Poly.Combinators.Char
                         Text.Syntax.Poly
-                        Text.Syntax.Poly.Parser.List
-                        Text.Syntax.Poly.Parser.ReadP
-                        Text.Syntax.Poly.Printer.List
+                        Text.Syntax.Parser.List
+                        Text.Syntax.Parser.ReadP
+                        Text.Syntax.Printer.List
                         Text.Syntax.Poly.Check
-                        -- Text.Syntax.Parser.ReadP
   
-  build-depends:         base < 5
-                       , partial-isomorphisms
-  --                     , invertible-syntax
+  build-depends:        base < 5
+                      , partial-isomorphisms
   
 
 source-repository head

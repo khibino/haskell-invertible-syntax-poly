@@ -6,7 +6,7 @@
 
 ----------------------------------------------------------------------------
 -- |
--- Module      : Text.Syntax.Poly.Printer.List
+-- Module      : Text.Syntax.Printer.List
 -- Copyright   : 2012 Kei Hibino
 -- License     : BSD3
 --
@@ -16,11 +16,13 @@
 --
 -- This module includes a naive printer implementation for invertible-syntax-poly.
 ----------------------------------------------------------------------------
-module Text.Syntax.Poly.Printer.List (
+module Text.Syntax.Printer.List (
   -- * Syntax instance Printer type
-  Printer, runPrinter, runPolyPrinter,
+  Printer, runPrinter,
   -- * Print action
-  printM
+  printM,
+  -- * Poly-morphic wrapper of runPrinter
+  runPolyPrinter
   ) where
 
 import Control.Isomorphism.Partial (IsoFunctor ((<$>)), unapply)
@@ -42,22 +44,22 @@ printM :: Monad m => Printer tok alpha -> alpha -> m [tok]
 printM p x = maybe (fail "print error") return $ runPrinter p x
 
 instance IsoFunctor (Printer tok) where
-  iso <$> Printer p 
+  iso <$> Printer p
     = Printer (\b -> unapply iso b >>= p)
 
 instance ProductFunctor (Printer tok) where
-  Printer p <*> Printer q 
+  Printer p <*> Printer q
     = Printer (\(x, y) -> liftM2 (++) (p x) (q y))
 
 instance IsoAlternative (Printer tok) where
-  Printer p <||> Printer q 
+  Printer p <||> Printer q
     = Printer (\s -> mplus (p s) (q s))
   empty = Printer (\_ -> Nothing)
 
 instance TryAlternative (Printer tok)
 
 instance AbstractSyntax (Printer tok) where
-  syntax x = Printer (\y ->  if x == y 
+  syntax x = Printer (\y ->  if x == y
                              then Just []
                              else Nothing)
 

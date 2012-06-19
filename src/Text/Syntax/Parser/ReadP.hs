@@ -14,7 +14,7 @@
 -- This module includes invertible-syntax-poly instance implementation for ReadP.
 -- Token may be polimorphic.
 ----------------------------------------------------------------------------
-module Text.Syntax.Poly.Parser.ReadP () where
+module Text.Syntax.Parser.ReadP () where
 
 import Text.Syntax.Poly.Instances ()
 import Text.Syntax.Poly.Class
