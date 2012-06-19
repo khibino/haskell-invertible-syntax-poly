@@ -1,5 +1,4 @@
 {-# LANGUAGE Rank2Types #-}
-{-# LANGUAGE FlexibleContexts #-}
 
 ----------------------------------------------------------------------------
 -- |
@@ -11,13 +10,21 @@
 -- Stability   : experimental
 -- Portability : unknown
 --
--- Simple type synonym for `Syntax` type-class.
+-- Type synonyms to represent syntax which has forall type value.
 ----------------------------------------------------------------------------
 
 module Text.Syntax.Poly.Type (
-  SyntaxT, ListSyntaxT) where
+  -- * Syntax type
+  SyntaxT,
+  -- * Type for runParser \/ runPrinter from syntax
+  RunParserT, RunPrinterT
+  ) where
 
 import Text.Syntax.Poly.Class (Syntax)
 
-type SyntaxT tok a = Syntax tok tks delta => delta a
-type ListSyntaxT tok a = Syntax tok [tok] delta => delta a
+type SyntaxT tok tks a = forall delta . Syntax tok tks delta => delta a
+
+-- type StreamSyntaxT tks a = forall delta . StreamSyntax tks delta => delta a
+
+type RunParserT  tok tks a = SyntaxT tok tks a -> tks -> Maybe (a, tks)
+type RunPrinterT tok tks a = SyntaxT tok tks a -> a   -> Maybe tks

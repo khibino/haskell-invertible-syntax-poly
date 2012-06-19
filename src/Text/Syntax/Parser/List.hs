@@ -1,9 +1,6 @@
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE FlexibleInstances #-}
 
-{-# LANGUAGE FlexibleContexts #-}
-{-# LANGUAGE Rank2Types #-}
-
 ----------------------------------------------------------------------------
 -- |
 -- Module      : Text.Syntax.Parser.List
@@ -29,7 +26,7 @@ import Text.Syntax.Poly.Instances ()
 import Text.Syntax.Poly.Class
   (TryAlternative, StreamSyntax (string), Syntax (token))
 import Text.Syntax.Poly.Combinators (list)
-import Text.Syntax.Poly.Type (ListSyntaxT)
+import Text.Syntax.Poly.Type (RunParserT)
 
 newtype Parser tok alpha =
   Parser { runParser :: [tok] -> Maybe (alpha, [tok]) }
@@ -54,5 +51,5 @@ instance Eq tok => Syntax tok [tok] (Parser tok) where
                      t:ts -> Just (t, ts)
                      []   -> Nothing)
 
-runPolyParser :: Eq tok => ListSyntaxT tok a -> [tok] -> Maybe (a, [tok])
+runPolyParser :: Eq tok => RunParserT tok [tok] a
 runPolyParser parser  = runParser parser
