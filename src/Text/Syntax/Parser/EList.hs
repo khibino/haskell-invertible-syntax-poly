@@ -12,8 +12,9 @@
 -- Portability : unknown
 --
 -- This module includes a naive parser implementation for invertible-syntax-poly.
+-- The same as Text.Syntax.Parser.List other than result Either type.
 ----------------------------------------------------------------------------
-module Text.Syntax.Parser.List (
+module Text.Syntax.Parser.EList (
   -- * Syntax instance Parser type
   Parser, runParser,
   -- * Poly- morphic wrapper of runParser
@@ -24,22 +25,27 @@ import Control.Monad (MonadPlus(mzero, mplus))
 
 import Text.Syntax.Poly.Instances ()
 import Text.Syntax.Poly.Class
-  (TryAlternative, StreamSyntax (string), Syntax (token))
+  (TryAlternative, StreamSyntax (string), Syntax (..))
 import Text.Syntax.Poly.Combinators (list)
 import Text.Syntax.Poly.Type (RunParserT)
 
+type ErrorStack = [String]
+
 newtype Parser tok alpha =
-  Parser { runParser :: [tok] -> Maybe (alpha, [tok]) }
+  Parser { runParser
+           :: [tok] -> ErrorStack -> Either ErrorStack (alpha, [tok]) }
 
 instance Monad (Parser tok) where
-  return a = Parser $ \s -> Just (a, s)
-  Parser p >>= fb = Parser (\s -> do (a, s') <- p s
-                                     runParser (fb a) s')
+  return a = Parser $ \s _ -> Right (a, s)
+  Parser p >>= fb = Parser (\s e -> do (a, s') <- p s e
+                                       runParser (fb a) s' e)
 
 instance MonadPlus (Parser tok) where
-  mzero = Parser $ const Nothing
+  mzero = Parser $ const Left
   Parser p1 `mplus` Parser p2 =
-    Parser (\s -> p1 s `mplus` p2 s)
+    Parser (\s e -> case p1 s e of
+               Left e' -> p2 s (e' ++ e)
+               r1      -> r1)
 
 instance TryAlternative (Parser tok)
 
@@ -47,9 +53,10 @@ instance Eq tok => StreamSyntax [tok] (Parser tok) where
   string = list
 
 instance Eq tok => Syntax tok [tok] (Parser tok) where
-  token = Parser (\s -> case s of
-                     t:ts -> Just (t, ts)
-                     []   -> Nothing)
+  token = Parser (\s e -> case s of
+                     t:ts -> Right (t, ts)
+                     []   -> Left $ "The end of token stream." : e)
+  fail msg = Parser (\_ e -> Left $ msg : e)
 
-runPolyParser :: Eq tok => RunParserT tok [tok] a String
-runPolyParser parser = maybe (Left "parse error") Right . runParser parser
+runPolyParser :: Eq tok => RunParserT tok [tok] a ErrorStack
+runPolyParser parser s = runParser parser s []

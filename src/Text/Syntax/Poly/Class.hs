@@ -20,7 +20,7 @@ module Text.Syntax.Poly.Class (
   TryAlternative((<|>), try),
   AbstractSyntax(syntax),
   StreamSyntax(string),
-  Syntax(token)
+  Syntax(token, fail)
   ) where
 
 import Control.Isomorphism.Partial (IsoFunctor)
@@ -68,3 +68,5 @@ class AbstractSyntax delta => StreamSyntax tks delta where
 class StreamSyntax tks delta => Syntax tok tks delta | delta -> tks where
   -- | Get a token from stream.
   token :: delta tok
+  fail  :: String -> delta a
+  fail  =  const empty
