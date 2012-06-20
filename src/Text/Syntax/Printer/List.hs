@@ -66,5 +66,5 @@ instance Eq tok => StreamSyntax [tok] (Printer tok) where
 instance Eq tok => Syntax tok [tok] (Printer tok) where
   token  = Printer (\t -> Just [t])
 
-runPolyPrinter :: Eq tok => RunPrinterT tok [tok] a
-runPolyPrinter printer = runPrinter printer
+runPolyPrinter :: Eq tok => RunPrinterT tok [tok] a String
+runPolyPrinter printer = maybe (Left "print error") Right . runPrinter printer

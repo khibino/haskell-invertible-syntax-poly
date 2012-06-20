@@ -51,5 +51,5 @@ instance Eq tok => Syntax tok [tok] (Parser tok) where
                      t:ts -> Just (t, ts)
                      []   -> Nothing)
 
-runPolyParser :: Eq tok => RunParserT tok [tok] a
-runPolyParser parser  = runParser parser
+runPolyParser :: Eq tok => RunParserT tok [tok] a String
+runPolyParser parser = maybe (Left "parse error") Right . runParser parser

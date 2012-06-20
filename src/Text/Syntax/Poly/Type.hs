@@ -26,5 +26,5 @@ type SyntaxT tok tks a = forall delta . Syntax tok tks delta => delta a
 
 -- type StreamSyntaxT tks a = forall delta . StreamSyntax tks delta => delta a
 
-type RunParserT  tok tks a = SyntaxT tok tks a -> tks -> Maybe (a, tks)
-type RunPrinterT tok tks a = SyntaxT tok tks a -> a   -> Maybe tks
+type RunParserT  tok tks a e = SyntaxT tok tks a -> tks -> Either e (a, tks)
+type RunPrinterT tok tks a e = SyntaxT tok tks a -> a   -> Either e tks
