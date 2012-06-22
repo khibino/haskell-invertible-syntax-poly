@@ -16,7 +16,7 @@
 ----------------------------------------------------------------------------
 module Text.Syntax.Parser.EList (
   -- * Syntax instance Parser type
-  Parser, runParser,
+  Parser, runParser, ErrorStack,
   -- * Poly- morphic wrapper of runParser
   runPolyParser
   ) where
