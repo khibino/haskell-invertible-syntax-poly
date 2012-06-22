@@ -26,7 +26,7 @@ import Text.Syntax.Poly.Instances ()
 import Text.Syntax.Poly.Class
   (TryAlternative, StreamSyntax (string), Syntax (token))
 import Text.Syntax.Poly.Combinators (list)
-import Text.Syntax.Poly.Type (RunParserT)
+import Text.Syntax.Poly.Type (RunParserT, ErrorString, errorString)
 
 newtype Parser tok alpha =
   Parser { runParser :: [tok] -> Maybe (alpha, [tok]) }
@@ -51,5 +51,5 @@ instance Eq tok => Syntax tok [tok] (Parser tok) where
                      t:ts -> Just (t, ts)
                      []   -> Nothing)
 
-runPolyParser :: Eq tok => RunParserT tok [tok] a String
-runPolyParser parser = maybe (Left "parse error") Right . runParser parser
+runPolyParser :: Eq tok => RunParserT tok [tok] a ErrorString
+runPolyParser parser = maybe (Left . errorString $ "parse error") Right . runParser parser

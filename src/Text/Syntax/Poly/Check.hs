@@ -24,9 +24,9 @@ import Text.Syntax.Poly.Type (SyntaxT, RunParserT, RunPrinterT)
 import Text.Syntax.Printer.List (runPolyPrinter)
 import Text.Syntax.Parser.List  (runPolyParser)
 
-printParseIso' :: (Eq a, Show e) =>
-                  RunPrinterT tok tks a e -> RunParserT tok tks a e -> SyntaxT tok tks a ->
-                  a -> Either String a
+printParseIso' :: (Eq a, Show e0, Show e1) =>
+                  RunPrinterT tok tks a e0 -> RunParserT tok tks a e1 ->
+                  SyntaxT tok tks a -> a -> Either String a
 printParseIso' runPrint runParse syntax tree0 =
   do tks        <- either (Left . show) Right $ runPrint syntax tree0
      (tree1, _) <- either (Left . show) Right $ runParse syntax tks
@@ -34,9 +34,9 @@ printParseIso' runPrint runParse syntax tree0 =
        then Right tree0
        else Left  "not isomorphism"
 
-printParseIso :: (Eq a, Show e) =>
-                 RunPrinterT tok tks a e -> RunParserT tok tks a e -> SyntaxT tok tks a ->
-                 tks -> Either String a
+printParseIso :: (Eq a, Show e0, Show e1) =>
+                 RunPrinterT tok tks a e0 -> RunParserT tok tks a e1
+                 -> SyntaxT tok tks a -> tks -> Either String a
 printParseIso runPrint runParse syntax tks0 =
   do (tree0, _) <- either (Left . show) Right $ runParse syntax tks0
      printParseIso' runPrint runParse syntax tree0

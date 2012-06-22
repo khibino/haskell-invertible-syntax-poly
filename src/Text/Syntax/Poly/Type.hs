@@ -17,7 +17,9 @@ module Text.Syntax.Poly.Type (
   -- * Syntax type
   SyntaxT,
   -- * Type for runParser \/ runPrinter from syntax
-  RunParserT, RunPrinterT
+  RunParserT, RunPrinterT,
+  -- * Handy error type
+  ErrorString, errorString
   ) where
 
 import Text.Syntax.Poly.Class (Syntax)
@@ -28,3 +30,11 @@ type SyntaxT tok tks a = forall delta . Syntax tok tks delta => delta a
 
 type RunParserT  tok tks a e = SyntaxT tok tks a -> tks -> Either e (a, tks)
 type RunPrinterT tok tks a e = SyntaxT tok tks a -> a   -> Either e tks
+
+newtype ErrorString = ErrorString String
+
+errorString :: String -> ErrorString
+errorString =  ErrorString
+
+instance Show ErrorString where
+  show (ErrorString s) = s

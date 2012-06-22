@@ -30,7 +30,7 @@ import Text.Syntax.Poly.Class
    IsoAlternative ((<||>), empty), TryAlternative,
    AbstractSyntax (syntax), StreamSyntax (string), Syntax (token))
 import Text.Syntax.Poly.Combinators (list)
-import Text.Syntax.Poly.Type (RunPrinterT)
+import Text.Syntax.Poly.Type (RunPrinterT, ErrorString, errorString)
 
 
 newtype Printer tok alpha =
@@ -66,5 +66,5 @@ instance Eq tok => StreamSyntax [tok] (Printer tok) where
 instance Eq tok => Syntax tok [tok] (Printer tok) where
   token  = Printer (\t -> Just [t])
 
-runPolyPrinter :: Eq tok => RunPrinterT tok [tok] a String
-runPolyPrinter printer = maybe (Left "print error") Right . runPrinter printer
+runPolyPrinter :: Eq tok => RunPrinterT tok [tok] a ErrorString
+runPolyPrinter printer = maybe (Left . errorString $ "print error") Right . runPrinter printer
