@@ -17,12 +17,13 @@ module Control.Isomorphism.Partial.Ext.Prim (
   iso,
   mayAppend',  (||?), mayAppend,
   mayPrepend', (?||), mayPrepend,
-  inc, dec
+  succ
   ) where
 
-import Prelude hiding (id)
+import Prelude hiding (id, succ, pred)
+import qualified Prelude as P (succ, pred)
 import Control.Category (id)
-import Control.Isomorphism.Partial.Prim (inverse, apply, unapply)
+import Control.Isomorphism.Partial.Prim (apply, unapply)
 import Control.Isomorphism.Partial.Unsafe (Iso (Iso))
 
 -- | Define a isomorphism from two pure functions.
@@ -74,10 +75,9 @@ mayPrepend =  (?|| id)
 infixr 6 ||?
 infixl 6 ?||
 
--- | succ and pred isomorphism.
-inc :: Enum a => Iso a a
-inc =  iso succ pred
-
--- | inverse of `inc`
-dec :: Enum a => Iso a a
-dec = inverse inc
+-- | Church number succ isomorphism
+succ :: Enum a => Iso a a
+succ =  Iso f g  where
+  f = Just . P.succ
+  g n | fromEnum n <= 0 = Nothing
+      | otherwise       = Just . P.pred $ n

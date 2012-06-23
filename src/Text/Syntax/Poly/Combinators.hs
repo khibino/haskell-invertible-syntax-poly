@@ -47,7 +47,7 @@ import Control.Isomorphism.Partial.Derived (foldl)
 import Control.Isomorphism.Partial.Prim
   (Iso, (<$>), inverse, element, unit, commute, ignore)
   
-import Control.Isomorphism.Partial.Ext.Prim (mayAppend, mayPrepend, inc)
+import Control.Isomorphism.Partial.Ext.Prim (mayAppend, mayPrepend, succ)
 
 import Text.Syntax.Poly.Class
   (ProductFunctor((<*>)), TryAlternative((<|>)),
@@ -125,7 +125,7 @@ chainl1 arg op f
 
 -- | The `count` combinator counts fixed syntax.
 count :: (Eq beta, Enum beta, AbstractSyntax delta) => delta () -> delta beta
-count p = inc <$> p *> count p <|> syntax (toEnum 0)
+count p = succ <$> p *> count p <|> syntax (toEnum 0)
 
 -- | The `optional` combinator may parse \/ print passed syntax.
 optional :: AbstractSyntax delta => delta alpha -> delta (Maybe alpha)
