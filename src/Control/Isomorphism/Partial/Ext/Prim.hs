@@ -17,7 +17,7 @@ module Control.Isomorphism.Partial.Ext.Prim (
   iso,
   mayAppend',  (||?), mayAppend,
   mayPrepend', (?||), mayPrepend,
-  succ
+  succ, singleton
   ) where
 
 import Prelude hiding (id, succ, pred)
@@ -81,3 +81,10 @@ succ =  Iso f g  where
   f = Just . P.succ
   g n | fromEnum n <= 0 = Nothing
       | otherwise       = Just . P.pred $ n
+
+-- | A value and singleton list
+singleton :: Iso a [a]
+singleton = Iso f g where
+  f = Just . (:[])
+  g [x] = Just x
+  g _   = Nothing
