@@ -50,7 +50,7 @@ class IsoAlternative f => TryAlternative f where
   (<|>) :: f alpha -> f alpha -> f alpha
   (<|>) = (<||>)
 
-infixl 3 <|>, <||>
+infixr 3 <|>, <||>
 
 -- | Syntax abstraction.
 class (IsoFunctor delta, ProductFunctor delta,
