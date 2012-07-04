@@ -14,7 +14,7 @@
 ------------------------------------------------------------
 
 module Control.Isomorphism.Partial.Ext.Prim (
-  iso,
+  iso, apply', unapply',
   mayAppend',  (||?), mayAppend,
   mayPrepend', (?||), mayPrepend,
   succ, singleton
@@ -23,8 +23,16 @@ module Control.Isomorphism.Partial.Ext.Prim (
 import Prelude hiding (id, succ, pred)
 import qualified Prelude as P (succ, pred)
 import Control.Category (id)
-import Control.Isomorphism.Partial.Prim (apply, unapply)
+import Control.Isomorphism.Partial.Prim (inverse, apply, unapply)
 import Control.Isomorphism.Partial.Unsafe (Iso (Iso))
+
+-- | strict version of apply
+apply' :: Iso alpha beta -> alpha -> Maybe beta
+apply' iso' x = let z = apply iso' x in z `seq` z
+
+-- | strict version of unapply
+unapply' :: Iso alpha beta -> beta -> Maybe alpha
+unapply' iso' = apply' (inverse iso')
 
 -- | Define a isomorphism from two pure functions.
 iso :: (a -> b) -> (b -> a) -> Iso a b
