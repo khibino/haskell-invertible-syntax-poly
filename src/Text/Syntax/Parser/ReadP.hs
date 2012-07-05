@@ -16,7 +16,7 @@
 ----------------------------------------------------------------------------
 module Text.Syntax.Parser.ReadP () where
 
-import Text.Syntax.Poly.Instances ()
+import Text.Syntax.Parser.Instances ()
 import Text.Syntax.Poly.Class
   (TryAlternative, StreamSyntax(string), Syntax(token))
 import Text.Syntax.Poly.Combinators (list)

@@ -23,6 +23,7 @@ module Text.Syntax.Parser.EList (
 
 import Control.Monad (MonadPlus(mzero, mplus))
 
+import Text.Syntax.Parser.Instances ()
 import Text.Syntax.Poly.Instances ()
 import Text.Syntax.Poly.Class
   (TryAlternative, StreamSyntax (string), Syntax (..))

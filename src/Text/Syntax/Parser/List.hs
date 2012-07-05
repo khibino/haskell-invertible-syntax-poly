@@ -22,7 +22,7 @@ module Text.Syntax.Parser.List (
 
 import Control.Monad (MonadPlus(mzero, mplus))
 
-import Text.Syntax.Poly.Instances ()
+import Text.Syntax.Parser.Instances ()
 import Text.Syntax.Poly.Class
   (TryAlternative, StreamSyntax (string), Syntax (token))
 import Text.Syntax.Poly.Combinators (list)
@@ -38,8 +38,8 @@ instance Monad (Parser tok) where
 
 instance MonadPlus (Parser tok) where
   mzero = Parser $ const Nothing
-  Parser p1 `mplus` Parser p2 =
-    Parser (\s -> p1 s `mplus` p2 s)
+  Parser p1 `mplus` p2' =
+    Parser (\s -> p1 s `mplus` runParser p2' s)
 
 instance TryAlternative (Parser tok)
 
