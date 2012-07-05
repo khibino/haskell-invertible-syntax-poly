@@ -18,7 +18,7 @@ module Text.Syntax.Poly.Instances () where
 
 import Control.Monad (MonadPlus (mzero, mplus))
 
-import Control.Isomorphism.Partial (IsoFunctor((<$>)), apply)
+import Control.Isomorphism.Partial (IsoFunctor)
 import Text.Syntax.Poly.Class
   (ProductFunctor((<*>)),
    IsoAlternative((<||>), empty), TryAlternative,
@@ -26,10 +26,6 @@ import Text.Syntax.Poly.Class
 
 -- | Instances on MonadPlus contexts 
 -- which are prerequisites for syntax definitions
-
-instance MonadPlus m => IsoFunctor m where
-  iso <$> mp = do a <- mp
-                  maybe mzero return $ apply iso a
 
 instance Monad m => ProductFunctor m where
   ma <*> mb = do a <- ma
@@ -40,5 +36,5 @@ instance MonadPlus m => IsoAlternative m where
   (<||>) = mplus
   empty  = mzero
 
-instance (MonadPlus m, TryAlternative m) => AbstractSyntax m where
+instance (IsoFunctor m, MonadPlus m, TryAlternative m) => AbstractSyntax m where
   syntax = return
