@@ -3,7 +3,7 @@
 
 ----------------------------------------------------------------------------
 -- |
--- Module      : Text.Syntax.Parser.List
+-- Module      : Text.Syntax.Parser.List.LazyMaybe
 -- Copyright   : 2012 Kei Hibino
 -- License     : BSD3
 --
@@ -13,7 +13,7 @@
 --
 -- This module includes a naive parser implementation for invertible-syntax-poly.
 ----------------------------------------------------------------------------
-module Text.Syntax.Parser.List (
+module Text.Syntax.Parser.List.LazyMaybe (
   -- * Syntax instance Parser type
   Parser, runParser,
   -- * Poly- morphic wrapper of runParser

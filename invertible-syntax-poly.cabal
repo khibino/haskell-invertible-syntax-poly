@@ -26,8 +26,10 @@ library
                         Text.Syntax.Poly.Combinators.Char
                         Text.Syntax.Poly
                         Text.Syntax.Parser.Instances
-                        Text.Syntax.Parser.List
-                        Text.Syntax.Parser.EList
+                        Text.Syntax.Parser.List.Lazy
+                        Text.Syntax.Parser.List.LazyMaybe
+                        -- Text.Syntax.Parser.List.Strict
+                        -- Text.Syntax.Parser.List.StrictMaybe
                         Text.Syntax.Parser.ReadP
                         Text.Syntax.Printer.List
                         Text.Syntax.Poly.Check

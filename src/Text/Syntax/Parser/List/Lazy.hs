@@ -3,7 +3,7 @@
 
 ----------------------------------------------------------------------------
 -- |
--- Module      : Text.Syntax.Parser.List
+-- Module      : Text.Syntax.Parser.List.Lazy
 -- Copyright   : 2012 Kei Hibino
 -- License     : BSD3
 --
@@ -14,7 +14,7 @@
 -- This module includes a naive parser implementation for invertible-syntax-poly.
 -- The same as Text.Syntax.Parser.List other than result Either type.
 ----------------------------------------------------------------------------
-module Text.Syntax.Parser.EList (
+module Text.Syntax.Parser.List.Lazy (
   -- * Syntax instance Parser type
   Parser, runParser, ErrorStack,
   -- * Poly- morphic wrapper of runParser
@@ -43,9 +43,9 @@ instance Monad (Parser tok) where
 
 instance MonadPlus (Parser tok) where
   mzero = Parser $ const Left
-  Parser p1 `mplus` Parser p2 =
+  Parser p1 `mplus` p2' =
     Parser (\s e -> case p1 s e of
-               Left e' -> p2 s (e' ++ e)
+               Left e' -> runParser p2' s (e' ++ e)
                r1      -> r1)
 
 instance TryAlternative (Parser tok)

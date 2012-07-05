@@ -22,7 +22,7 @@ module Text.Syntax.Poly.Check (
 import Text.Syntax.Poly.Type (SyntaxT, RunParserT, RunPrinterT)
 
 import Text.Syntax.Printer.List (runPolyPrinter)
-import Text.Syntax.Parser.List  (runPolyParser)
+import Text.Syntax.Parser.List.LazyMaybe  (runPolyParser)
 
 printParseIso' :: (Eq a, Show e0, Show e1) =>
                   RunPrinterT tok tks a e0 -> RunParserT tok tks a e1 ->
