@@ -1,6 +1,7 @@
 name:                invertible-syntax-poly
 version:             0.1.0.0
-synopsis:            Extension of invertible-syntax library.
+synopsis:            Extends invertible-syntax library
+                     capable to use parameterized token type.
 description:         Extends invertible-syntax library
                      capable to use parameterized token type.
 homepage:            http://twitter.com/khibino
