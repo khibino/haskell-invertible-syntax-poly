@@ -28,7 +28,7 @@ import Text.Syntax.Poly.Instances ()
 import Text.Syntax.Poly.Class
   (TryAlternative, StreamSyntax (string), Syntax (..))
 import Text.Syntax.Poly.Combinators (list)
-import Text.Syntax.Poly.Type (RunParserT, ErrorString, errorString)
+import Text.Syntax.Poly.Type (RunParser, ErrorString, errorString)
 
 type ErrorStack = [ErrorString]
 
@@ -59,5 +59,8 @@ instance Eq tok => Syntax tok [tok] (Parser tok) where
                      []   -> Left $ errorString "The end of token stream." : e)
   fail msg = Parser (\_ e -> Left $ errorString msg : e)
 
-runPolyParser :: Eq tok => RunParserT tok [tok] a ErrorStack
-runPolyParser parser s = runParser parser s []
+runPolyParser :: Eq tok => RunParser tok [tok] a ErrorStack
+runPolyParser parser s = do (a, s') <- runParser parser s []
+                            if s' == []
+                              then Right a
+                              else Left [errorString "Not the end of token stream."]

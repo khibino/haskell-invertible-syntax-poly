@@ -28,14 +28,15 @@ import Text.Syntax.Parser.Instances ()
 import Text.Syntax.Poly.Class
   (TryAlternative, StreamSyntax (string), Syntax (token))
 import Text.Syntax.Poly.Combinators (list)
-import Text.Syntax.Poly.Type (RunParserT, ErrorString, errorString)
+import Text.Syntax.Poly.Type (RunParser, ErrorString, errorString)
 
 data Result a tok = Good !a ![tok] | Bad
 
-maybeOfResult :: Result a tok -> Maybe (a, [tok])
+maybeOfResult :: Result a tok -> Maybe a
 maybeOfResult =  d  where
-  d (Good a s) = Just (a, s)
-  d Bad        = Nothing
+  d (Good a [])    = Just a
+  d (Good _ (_:_)) = Nothing
+  d Bad            = Nothing
 
 data Parser tok alpha =
   forall beta . Parser tok beta :>>= (beta -> Parser tok alpha) |
@@ -72,6 +73,6 @@ instance Eq tok => Syntax tok [tok] (Parser tok) where
                    t:ts -> Good t ts
                    []   -> Bad)
 
-runPolyParser :: Eq tok => RunParserT tok [tok] a ErrorString
+runPolyParser :: Eq tok => RunParser tok [tok] a ErrorString
 runPolyParser parser = maybe (Left . errorString $ "parse error") Right
                        . maybeOfResult . runParser' parser

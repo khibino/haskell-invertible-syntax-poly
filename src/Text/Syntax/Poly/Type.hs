@@ -3,7 +3,7 @@
 ----------------------------------------------------------------------------
 -- |
 -- Module      : Text.Syntax.Poly.Type
--- Copyright   : 2012 Kei Hibino, 2010-11 University of Marburg
+-- Copyright   : 2012 Kei Hibino
 -- License     : BSD3
 --
 -- Maintainer  : ex8k.hibino@gmail.com
@@ -17,8 +17,8 @@ module Text.Syntax.Poly.Type (
   -- * Syntax type
   SyntaxT,
   -- * Type for runParser \/ runPrinter from syntax
-  RunParserT, RunPrinterT,
-  RunParserA, RunPrinterA,
+  RunParser, RunPrinter,
+  RunParserM, RunPrinterM,
   -- * Handy error type
   ErrorString, errorString
   ) where
@@ -29,10 +29,10 @@ type SyntaxT tok tks a = forall delta . Syntax tok tks delta => delta a
 
 -- type StreamSyntaxT tks a = forall delta . StreamSyntax tks delta => delta a
 
-type RunParserT  tok tks a e = SyntaxT tok tks a -> tks -> Either e (a, tks)
-type RunPrinterT tok tks a e = SyntaxT tok tks a -> a   -> Either e tks
-type RunParserA  m tok tks a e = SyntaxT tok tks a -> tks -> m (Either e (a, tks))
-type RunPrinterA m tok tks a e = SyntaxT tok tks a -> a   -> m (Either e tks)
+type RunParser     tok tks a e = SyntaxT tok tks a -> tks -> Either e a
+type RunPrinter    tok tks a e = SyntaxT tok tks a -> a   -> Either e tks
+type RunParserM  m tok tks a e = SyntaxT tok tks a -> tks -> m (Either e a)
+type RunPrinterM m tok tks a e = SyntaxT tok tks a -> a   -> m (Either e tks)
 
 newtype ErrorString = ErrorString String
 

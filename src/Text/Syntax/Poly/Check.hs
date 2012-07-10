@@ -19,26 +19,26 @@ module Text.Syntax.Poly.Check (
   printParseIsoDefault', printParseIsoDefault
   ) where
 
-import Text.Syntax.Poly.Type (SyntaxT, RunParserT, RunPrinterT)
+import Text.Syntax.Poly.Type (SyntaxT, RunParser, RunPrinter)
 
 import Text.Syntax.Printer.List (runPolyPrinter)
 import Text.Syntax.Parser.List.LazyMaybe  (runPolyParser)
 
 printParseIso' :: (Eq a, Show e0, Show e1) =>
-                  RunPrinterT tok tks a e0 -> RunParserT tok tks a e1 ->
+                  RunPrinter tok tks a e0 -> RunParser tok tks a e1 ->
                   SyntaxT tok tks a -> a -> Either String a
 printParseIso' runPrint runParse syntax tree0 =
-  do tks        <- either (Left . show) Right $ runPrint syntax tree0
-     (tree1, _) <- either (Left . show) Right $ runParse syntax tks
+  do tks   <- either (Left . show) Right $ runPrint syntax tree0
+     tree1 <- either (Left . show) Right $ runParse syntax tks
      if tree0 == tree1
        then Right tree0
        else Left  "not isomorphism"
 
 printParseIso :: (Eq a, Show e0, Show e1) =>
-                 RunPrinterT tok tks a e0 -> RunParserT tok tks a e1
+                 RunPrinter tok tks a e0 -> RunParser tok tks a e1
                  -> SyntaxT tok tks a -> tks -> Either String a
 printParseIso runPrint runParse syntax tks0 =
-  do (tree0, _) <- either (Left . show) Right $ runParse syntax tks0
+  do tree0 <- either (Left . show) Right $ runParse syntax tks0
      printParseIso' runPrint runParse syntax tree0
 
 printParseIsoDefault' :: (Eq tok, Eq a) => SyntaxT tok [tok] a -> a -> Either String a
