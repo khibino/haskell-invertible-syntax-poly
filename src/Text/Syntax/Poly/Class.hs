@@ -1,5 +1,5 @@
 {-# LANGUAGE MultiParamTypeClasses #-}
-{-# LANGUAGE FunctionalDependencies #-}
+{--# LANGUAGE FunctionalDependencies #-}
 
 ----------------------------------------------------------------------------
 -- |
@@ -19,7 +19,6 @@ module Text.Syntax.Poly.Class (
   IsoAlternative((<||>), empty),
   TryAlternative((<|>), try),
   AbstractSyntax(syntax),
-  StreamSyntax(string),
   Syntax(token, fail)
   ) where
 
@@ -59,13 +58,8 @@ class (IsoFunctor delta, ProductFunctor delta,
   -- | Lift a value.
   syntax :: Eq alpha => alpha -> delta alpha
   
--- | Syntax abstraction with stream type @tks@ corresponding.
-class AbstractSyntax delta => StreamSyntax tks delta where
-  -- | Parse or print just token stream.
-  string :: tks -> delta ()
-
--- | Syntax abstraction with token type @tok@ and stream type @tks@.
-class StreamSyntax tks delta => Syntax tok tks delta | delta -> tks where
+-- | Syntax abstraction with token type @tok@.
+class AbstractSyntax delta => Syntax tok delta where
   -- | Get a token from stream.
   token :: delta tok
   fail  :: String -> delta a

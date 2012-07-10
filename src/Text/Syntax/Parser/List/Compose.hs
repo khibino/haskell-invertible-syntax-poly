@@ -26,8 +26,7 @@ import Control.Monad (MonadPlus(mzero, mplus))
 
 import Text.Syntax.Parser.Instances ()
 import Text.Syntax.Poly.Class
-  (TryAlternative, StreamSyntax (string), Syntax (token))
-import Text.Syntax.Poly.Combinators (list)
+  (TryAlternative, Syntax (token))
 import Text.Syntax.Poly.Type (RunParser, ErrorString, errorString)
 
 data Result a tok = Good !a ![tok] | Bad
@@ -65,10 +64,7 @@ instance MonadPlus (Parser tok) where
 
 instance TryAlternative (Parser tok)
 
-instance Eq tok => StreamSyntax [tok] (Parser tok) where
-  string = list
-
-instance Eq tok => Syntax tok [tok] (Parser tok) where
+instance Eq tok => Syntax tok (Parser tok) where
   token = Prim (\s -> case s of
                    t:ts -> Good t ts
                    []   -> Bad)

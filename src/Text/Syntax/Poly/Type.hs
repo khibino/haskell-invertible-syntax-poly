@@ -25,14 +25,12 @@ module Text.Syntax.Poly.Type (
 
 import Text.Syntax.Poly.Class (Syntax)
 
-type SyntaxT tok tks a = forall delta . Syntax tok tks delta => delta a
+type SyntaxT tok a = forall delta . Syntax tok delta => delta a
 
--- type StreamSyntaxT tks a = forall delta . StreamSyntax tks delta => delta a
-
-type RunParser     tok tks a e = SyntaxT tok tks a -> tks -> Either e a
-type RunPrinter    tok tks a e = SyntaxT tok tks a -> a   -> Either e tks
-type RunParserM  m tok tks a e = SyntaxT tok tks a -> tks -> m (Either e a)
-type RunPrinterM m tok tks a e = SyntaxT tok tks a -> a   -> m (Either e tks)
+type RunParser     tok tks a e = SyntaxT tok a -> tks -> Either e a
+type RunPrinter    tok tks a e = SyntaxT tok a -> a   -> Either e tks
+type RunParserM  m tok tks a e = SyntaxT tok a -> tks -> m (Either e a)
+type RunPrinterM m tok tks a e = SyntaxT tok a -> a   -> m (Either e tks)
 
 newtype ErrorString = ErrorString String
 

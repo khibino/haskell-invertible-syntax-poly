@@ -26,7 +26,7 @@ import Text.Syntax.Parser.List.LazyMaybe  (runPolyParser)
 
 printParseIso' :: (Eq a, Show e0, Show e1) =>
                   RunPrinter tok tks a e0 -> RunParser tok tks a e1 ->
-                  SyntaxT tok tks a -> a -> Either String a
+                  SyntaxT tok a -> a -> Either String a
 printParseIso' runPrint runParse syntax tree0 =
   do tks   <- either (Left . show) Right $ runPrint syntax tree0
      tree1 <- either (Left . show) Right $ runParse syntax tks
@@ -36,13 +36,13 @@ printParseIso' runPrint runParse syntax tree0 =
 
 printParseIso :: (Eq a, Show e0, Show e1) =>
                  RunPrinter tok tks a e0 -> RunParser tok tks a e1
-                 -> SyntaxT tok tks a -> tks -> Either String a
+                 -> SyntaxT tok a -> tks -> Either String a
 printParseIso runPrint runParse syntax tks0 =
   do tree0 <- either (Left . show) Right $ runParse syntax tks0
      printParseIso' runPrint runParse syntax tree0
 
-printParseIsoDefault' :: (Eq tok, Eq a) => SyntaxT tok [tok] a -> a -> Either String a
+printParseIsoDefault' :: (Eq tok, Eq a) => SyntaxT tok a -> a -> Either String a
 printParseIsoDefault' =  printParseIso' runPolyPrinter runPolyParser
 
-printParseIsoDefault :: (Eq tok, Eq a) => SyntaxT tok [tok] a -> [tok] -> Either String a
+printParseIsoDefault :: (Eq tok, Eq a) => SyntaxT tok a -> [tok] -> Either String a
 printParseIsoDefault =  printParseIso runPolyPrinter runPolyParser

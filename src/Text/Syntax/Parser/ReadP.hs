@@ -20,7 +20,7 @@ import Data.List (find)
 
 import Text.Syntax.Parser.Instances ()
 import Text.Syntax.Poly.Class
-  (TryAlternative, StreamSyntax(string), Syntax(token))
+  (TryAlternative, Syntax(token))
 import Text.Syntax.Poly.Combinators (list)
 import Text.Syntax.Poly.Type (RunParser, ErrorString, errorString)
 
@@ -28,10 +28,7 @@ import Text.ParserCombinators.ReadP (ReadP, get, readP_to_S)
 
 instance TryAlternative ReadP
 
-instance StreamSyntax String ReadP where
-  string = list
-
-instance Syntax Char String ReadP where
+instance Syntax Char ReadP where
   token = get
 
 runPolyParser :: RunParser Char String a ErrorString

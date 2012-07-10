@@ -26,8 +26,7 @@ import Control.Monad (MonadPlus(mzero, mplus))
 import Text.Syntax.Parser.Instances ()
 import Text.Syntax.Poly.Instances ()
 import Text.Syntax.Poly.Class
-  (TryAlternative, StreamSyntax (string), Syntax (..))
-import Text.Syntax.Poly.Combinators (list)
+  (TryAlternative, Syntax (..))
 import Text.Syntax.Poly.Type (RunParser, ErrorString, errorString)
 
 type ErrorStack = [ErrorString]
@@ -50,10 +49,7 @@ instance MonadPlus (Parser tok) where
 
 instance TryAlternative (Parser tok)
 
-instance Eq tok => StreamSyntax [tok] (Parser tok) where
-  string = list
-
-instance Eq tok => Syntax tok [tok] (Parser tok) where
+instance Eq tok => Syntax tok (Parser tok) where
   token = Parser (\s e -> case s of
                      t:ts -> Right (t, ts)
                      []   -> Left $ errorString "The end of token stream." : e)

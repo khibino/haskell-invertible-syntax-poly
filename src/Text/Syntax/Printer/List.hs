@@ -28,7 +28,7 @@ import Control.Monad (liftM2, mplus)
 import Text.Syntax.Poly.Class
   (ProductFunctor ((<*>)),
    IsoAlternative ((<||>), empty), TryAlternative,
-   AbstractSyntax (syntax), StreamSyntax (string), Syntax (token))
+   AbstractSyntax (syntax), Syntax (token))
 import Text.Syntax.Poly.Combinators (list)
 import Text.Syntax.Poly.Type (RunPrinter, ErrorString, errorString)
 
@@ -60,10 +60,7 @@ instance AbstractSyntax (Printer tok) where
                              then Just []
                              else Nothing)
 
-instance Eq tok => StreamSyntax [tok] (Printer tok) where
-  string = list
-
-instance Eq tok => Syntax tok [tok] (Printer tok) where
+instance Eq tok => Syntax tok (Printer tok) where
   token  = Printer (\t -> Just [t])
 
 runPolyPrinter :: Eq tok => RunPrinter tok [tok] a ErrorString

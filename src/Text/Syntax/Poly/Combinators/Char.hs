@@ -24,35 +24,35 @@ module Text.Syntax.Poly.Combinators.Char (
   ) where
 
 import Control.Isomorphism.Partial.Prim ((<$>), ignore)
-import Text.Syntax.Poly.Class (StreamSyntax(string))
-import Text.Syntax.Poly.Combinators (many, (<*))
+import Text.Syntax.Poly.Class (Syntax)
+import Text.Syntax.Poly.Combinators (many, (<*), this)
 
 -- | Syntax comma (,).
-comma :: StreamSyntax String delta => delta ()
-comma = string ","
+comma :: Syntax Char delta => delta ()
+comma =  this ','
 
 -- | Syntax dot (.).
-dot :: StreamSyntax String delta => delta ()
-dot = string "."
+dot :: Syntax Char delta => delta ()
+dot =  this '.'
 
 
 -- | `skipSpace` marks a position where whitespace is allowed to
 -- occur. It accepts arbitrary space while parsing, and produces
 -- no space while printing. 
 
-skipSpace  ::  StreamSyntax String delta => delta ()
-skipSpace  =   ignore []    <$>  many (string " ")
+skipSpace  ::  Syntax Char delta => delta ()
+skipSpace  =   ignore []    <$>  many (this ' ')
  
 -- | `optSpace` marks a position where whitespace is desired to occur.
 -- It accepts arbitrary space while parsing, and produces a 
 -- single space character while printing.
 
-optSpace  ::  StreamSyntax String delta => delta ()
-optSpace  =   ignore [()]  <$>  many (string " ")
+optSpace  ::  Syntax Char delta => delta ()
+optSpace  =   ignore [()]  <$>  many (this ' ')
 
 -- | `sepSpace` marks a position where whitespace is required to
 -- occur. It requires one or more space characters while parsing, 
 -- and produces a single space character while printing.
    
-sepSpace  ::  StreamSyntax String delta => delta ()
-sepSpace  =   string " " <* skipSpace
+sepSpace  ::  Syntax Char delta => delta ()
+sepSpace  =   this ' ' <* skipSpace

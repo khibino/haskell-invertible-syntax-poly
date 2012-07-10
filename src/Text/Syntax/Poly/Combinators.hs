@@ -51,7 +51,7 @@ import Control.Isomorphism.Partial.Ext.Prim (mayAppend, mayPrepend, succ)
 
 import Text.Syntax.Poly.Class
   (ProductFunctor((<*>)), TryAlternative((<|>)),
-   AbstractSyntax(syntax), StreamSyntax(string), Syntax(token))
+   AbstractSyntax(syntax), Syntax(token))
 
 import Data.Either (Either)
 import Data.Maybe (Maybe(Just))
@@ -80,11 +80,11 @@ infixl 4 <+>
 p <+> q = (left <$> p) <|> (right <$> q) 
 
 -- |  this  parses\/prints a fixed token
-this :: (Syntax tok tks delta, Eq tok) => tok -> delta ()
+this :: (Syntax tok delta, Eq tok) => tok -> delta ()
 this t = inverse (element t) <$> token
 
 -- | `list` parses\/prints a fixed token list and consumes\/produces a unit value.
-list :: (Syntax tok tks delta, Eq tok) => [tok] -> delta ()
+list :: (Syntax tok delta, Eq tok) => [tok] -> delta ()
 list []      =    syntax ()
 list (c:cs)  =    inverse (element ((), ()))
              <$>  this c
@@ -160,5 +160,5 @@ infix 5 <$?>, <?$>
 -- | The `format` combinator just print passed tokens
 -- or may parse passed tokens.
 -- This is useful in cases when just formatting with indents.
-format :: StreamSyntax tks delta => tks -> delta ()
-format tks = ignore (Just ()) <$> optional (string tks)
+format :: (Syntax tok delta, Eq tok) => [tok] -> delta ()
+format tks = ignore (Just ()) <$> optional (list tks)
