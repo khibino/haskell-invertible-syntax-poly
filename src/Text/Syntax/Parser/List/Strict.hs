@@ -65,5 +65,5 @@ instance Eq tok => Syntax tok [tok] (Parser tok) where
 runPolyParser :: Eq tok => RunParser tok [tok] a ErrorStack
 runPolyParser parser s = case runParser parser s [] of
   Good x []    -> Right x
-  Good _ (_:_) -> Left  [errorString "Not the end of token stream."] 
+  Good _ (_:_) -> Left  [errorString "Not the end of token stream."]
   Bad  err     -> Left  err
