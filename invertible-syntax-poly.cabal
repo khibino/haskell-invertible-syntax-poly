@@ -30,8 +30,8 @@ library
                         Text.Syntax.Parser.List.Compose
                         Text.Syntax.Parser.List.Lazy
                         Text.Syntax.Parser.List.LazyMaybe
-                        -- Text.Syntax.Parser.List.Strict
-                        -- Text.Syntax.Parser.List.StrictMaybe
+                        Text.Syntax.Parser.List.Strict
+                        Text.Syntax.Parser.List.StrictMaybe
                         Text.Syntax.Parser.ReadP
                         Text.Syntax.Printer.List
                         Text.Syntax.Poly.Check
