@@ -34,7 +34,7 @@ library
                         Text.Syntax.Parser.List.StrictMaybe
                         Text.Syntax.Parser.ReadP
                         Text.Syntax.Printer.List
-                        Text.Syntax.Poly.Check
+                        Text.Syntax.Check.Prim
   
   build-depends:        base < 5
                       , partial-isomorphisms

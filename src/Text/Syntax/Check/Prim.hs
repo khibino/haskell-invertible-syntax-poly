@@ -3,7 +3,7 @@
 
 ----------------------------------------------------------------------------
 -- |
--- Module      : Text.Syntax.Poly.Check
+-- Module      : Text.Syntax.Check.Prim
 -- Copyright   : 2012 Kei Hibino, 2010-11 University of Marburg
 -- License     : BSD3
 --
@@ -14,7 +14,7 @@
 -- This module contains isomorphism check function.
 ----------------------------------------------------------------------------
 
-module Text.Syntax.Poly.Check (
+module Text.Syntax.Check.Prim (
   printParseIso', printParseIso,
   printParseIsoDefault', printParseIsoDefault
   ) where
