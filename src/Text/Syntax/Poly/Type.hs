@@ -19,12 +19,13 @@ module Text.Syntax.Poly.Type (
   -- * Type for runParser \/ runPrinter from syntax
   RunParser, RunPrinter,
   RunParserM, RunPrinterM,
-  -- * Handy error type
+  -- * Error string type
   ErrorString, errorString
   ) where
 
 import Text.Syntax.Poly.Class (Syntax)
 
+-- | Syntax type synonym includes contexts.
 type SyntaxT tok a = forall delta . Syntax tok delta => delta a
 
 type RunParser     tok tks a e = SyntaxT tok a -> tks -> Either e a
@@ -32,6 +33,7 @@ type RunPrinter    tok tks a e = SyntaxT tok a -> a   -> Either e tks
 type RunParserM  m tok tks a e = SyntaxT tok a -> tks -> m (Either e a)
 type RunPrinterM m tok tks a e = SyntaxT tok a -> a   -> m (Either e tks)
 
+-- | String type which is Show instance not to show but just return string
 newtype ErrorString = ErrorString String
 
 errorString :: String -> ErrorString

@@ -24,6 +24,7 @@ import Text.Syntax.Poly.Type (SyntaxT, RunParser, RunPrinter)
 import Text.Syntax.Printer.List (runPolyPrinter)
 import Text.Syntax.Parser.List.LazyMaybe  (runPolyParser)
 
+-- | Run print and parse series, then check the equality between input and output.
 printParseIso' :: (Eq a, Show e0, Show e1) =>
                   RunPrinter tok tks a e0 -> RunParser tok tks a e1 ->
                   SyntaxT tok a -> a -> Either String a
@@ -34,6 +35,7 @@ printParseIso' runPrint runParse syntax tree0 =
        then Right tree0
        else Left  "not isomorphism"
 
+-- | Run parse, print and parse series, then check the quality between first and second AST.
 printParseIso :: (Eq a, Show e0, Show e1) =>
                  RunPrinter tok tks a e0 -> RunParser tok tks a e1
                  -> SyntaxT tok a -> tks -> Either String a
@@ -41,8 +43,10 @@ printParseIso runPrint runParse syntax tks0 =
   do tree0 <- either (Left . show) Right $ runParse syntax tks0
      printParseIso' runPrint runParse syntax tree0
 
+-- | Run print and parse series with naive implementations, then check the equality between input and output.
 printParseIsoDefault' :: (Eq tok, Eq a) => SyntaxT tok a -> a -> Either String a
 printParseIsoDefault' =  printParseIso' runPolyPrinter runPolyParser
 
+-- | Run parse, print and parse series with naive implementations, then check the equality between first and second AST.
 printParseIsoDefault :: (Eq tok, Eq a) => SyntaxT tok a -> [tok] -> Either String a
 printParseIsoDefault =  printParseIso runPolyPrinter runPolyParser
