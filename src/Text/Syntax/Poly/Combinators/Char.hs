@@ -53,6 +53,6 @@ optSpace  =   ignore [()]  <$>  many (this ' ')
 -- | `sepSpace` marks a position where whitespace is required to
 -- occur. It requires one or more space characters while parsing, 
 -- and produces a single space character while printing.
-   
+
 sepSpace  ::  Syntax Char delta => delta ()
 sepSpace  =   this ' ' <* skipSpace
