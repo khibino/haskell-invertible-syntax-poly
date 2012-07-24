@@ -17,11 +17,12 @@ module Control.Isomorphism.Partial.Ext.Prim (
   iso, apply', unapply',
   mayAppend',  (||?), mayAppend,
   mayPrepend', (?||), mayPrepend,
-  succ, singleton
+  succ, singleton,
+  readShow, negate, not, reverse
   ) where
 
-import Prelude hiding (id, succ, pred)
-import qualified Prelude as P (succ, pred)
+import Prelude hiding (id, succ, pred, negate, not, reverse)
+import qualified Prelude as P
 import Control.Category (id)
 import Control.Isomorphism.Partial.Prim (inverse, apply, unapply)
 import Control.Isomorphism.Partial.Unsafe (Iso (Iso))
@@ -96,3 +97,20 @@ singleton = Iso f g where
   f = Just . (:[])
   g [x] = Just x
   g _   = Nothing
+
+
+-- | Isomorphism from read and show
+readShow :: (Read a, Show a) => Iso String a
+readShow =  iso read show
+
+-- | negate number
+negate :: Num a => Iso a a
+negate =  iso P.negate P.negate
+
+-- | negate boolean
+not :: Iso Bool Bool
+not =  iso P.not P.not
+
+-- | list reverse
+reverse :: Iso [a] [a]
+reverse =  iso P.reverse P.reverse
