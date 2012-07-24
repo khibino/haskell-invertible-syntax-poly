@@ -29,7 +29,7 @@ module Text.Syntax.Poly.Combinators (
   (<*),
   between,
   -- * Alternation
-  (<+>),
+  (<+>), choice,
   optional, bool,
   (<$?>), (<?$>),
   -- * Printing
@@ -50,7 +50,7 @@ import Control.Isomorphism.Partial.Prim
 import Control.Isomorphism.Partial.Ext.Prim (mayAppend, mayPrepend, succ)
 
 import Text.Syntax.Poly.Class
-  (ProductFunctor((<*>)), TryAlternative((<|>)),
+  ((<*>), (<|>), empty,
    AbstractSyntax(syntax), Syntax(token))
 
 import Data.Either (Either)
@@ -72,7 +72,7 @@ many p = some p <|> none
 -- more than zero times.
 some :: AbstractSyntax delta => delta alpha -> delta [alpha]
 some p = cons <$> p <*> many p
-             
+
 infixl 4 <+>
 
 -- | The '<+>' combinator choose one of two syntax.
@@ -126,6 +126,11 @@ chainl1 arg op f
 -- | The `count` combinator counts fixed syntax.
 count :: (Eq beta, Enum beta, AbstractSyntax delta) => delta () -> delta beta
 count p = succ <$> p *> count p <|> syntax (toEnum 0)
+
+-- | `choice` a syntax from list.
+choice :: AbstractSyntax delta => [delta alpha] -> delta alpha
+choice (s:ss) = s <|> choice ss
+choice []     = empty
 
 -- | The `optional` combinator may parse \/ print passed syntax.
 optional :: AbstractSyntax delta => delta alpha -> delta (Maybe alpha)
