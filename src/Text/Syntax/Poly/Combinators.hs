@@ -21,6 +21,7 @@ module Text.Syntax.Poly.Combinators (
   none,
   many,
   some,
+  replicate,
   sepBy, sepBy1,
   chainl1,
   count,
@@ -36,26 +37,16 @@ module Text.Syntax.Poly.Combinators (
   format
   ) where
 
-import Prelude (String, Char, Eq, Enum(toEnum)
-                -- , foldr
-               )
+import Prelude hiding (foldl, succ, replicate, (.))
 
-import Control.Category ((.))
-import Control.Isomorphism.Partial.Constructors
-  (nothing, just, nil, cons, left, right)
-import Control.Isomorphism.Partial.Derived (foldl)
-import Control.Isomorphism.Partial.Prim
-  (Iso, (<$>), inverse, element, unit, commute, ignore)
-  
-import Control.Isomorphism.Partial.Ext.Prim (mayAppend, mayPrepend, succ)
+import Control.Isomorphism.Partial.Ext
+  (nothing, just, nil, cons, left, right, foldl,
+   (.), Iso, (<$>), inverse, element, unit, commute, ignore,
+   mayAppend, mayPrepend, succ)
 
 import Text.Syntax.Poly.Class
   ((<*>), (<|>), empty,
    AbstractSyntax(syntax), Syntax(token))
-
-import Data.Either (Either)
-import Data.Maybe (Maybe(Just))
-import Data.Bool (Bool(True, False))
 
 -- | `none` parses\/prints empty tokens stream consume\/produces a empty list.
 none :: AbstractSyntax delta => delta [alpha]
@@ -72,6 +63,12 @@ many p = some p <|> none
 -- more than zero times.
 some :: AbstractSyntax delta => delta alpha -> delta [alpha]
 some p = cons <$> p <*> many p
+
+
+replicate :: AbstractSyntax delta => Int -> delta alpha -> delta [alpha]
+replicate n' p = rec n' where
+  rec n | n <= 0    = none
+        | otherwise = cons <$> p <*> rec (n - 1)
 
 infixl 4 <+>
 
