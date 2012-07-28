@@ -17,7 +17,7 @@
 ----------------------------------------------------------------------------
 module Text.Syntax.Parser.List.Compose (
   -- * Syntax instance Parser type
-  Parser, runParser', Result,
+  Parser, runParser, Result,
   -- * Poly- morphic wrapper of runParser
   runPolyParser
   ) where
@@ -42,16 +42,16 @@ data Parser tok alpha =
   Parser tok alpha              :<|> Parser tok alpha           |
   Prim ([tok] -> Result alpha tok)
 
-runParser' :: Parser tok alpha -> [tok] -> Result alpha tok
-runParser' p0 s0 = let z = d p0 s0 in z `seq` z  where
+runParser :: Parser tok alpha -> [tok] -> Result alpha tok
+runParser p0 s0 = let z = d p0 s0 in z `seq` z  where
   d (Prim p)     s = p s
   d (pa :>>= fb) s =
-    case runParser' pa s of
-      Good a s' -> runParser' (fb a) s'
+    case runParser pa s of
+      Good a s' -> runParser (fb a) s'
       Bad       -> Bad
   d (p1 :<|> p2) s =
-    case runParser' p1 s of
-      Bad           -> runParser' p2 s
+    case runParser p1 s of
+      Bad           -> runParser p2 s
       r1@(Good _ _) -> r1
 
 instance Monad (Parser tok) where
@@ -71,4 +71,4 @@ instance Eq tok => Syntax tok (Parser tok) where
 
 runPolyParser :: Eq tok => RunParser tok [tok] a ErrorString
 runPolyParser parser = maybe (Left . errorString $ "parse error") Right
-                       . maybeOfResult . runParser' parser
+                       . maybeOfResult . runParser parser
