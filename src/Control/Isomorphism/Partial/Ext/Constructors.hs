@@ -1,19 +1,14 @@
-
-------------------------------------------------------------
 -- |
 -- Module      : Control.Isomorphism.Partial.Ext.Constructors
--- Copyright   : (c) Kei Hibino 2012
--- Licese      : BSD3
+-- Copyright   : Kei Hibino 2012
+-- License     : BSD3
 --
 -- Maintainer  : ex8k.hibino@gmail.com
 -- Stability   : experimental
 -- Portability : unknown
 --
--- This module contains @Iso@ definitions which are inverted
--- definitions defined in
--- @Control.Isomorphism.Partial.Constructors@.
-------------------------------------------------------------
-
+-- This module contains @Iso@ definitions which are inverted definitions
+-- defined in @Control.Isomorphism.Partial.Constructors@.
 module Control.Isomorphism.Partial.Ext.Constructors (
   cons', nil',
   just', nothing',
