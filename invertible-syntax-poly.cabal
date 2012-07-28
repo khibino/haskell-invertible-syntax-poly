@@ -19,6 +19,7 @@ library
   exposed-modules:
                         Control.Isomorphism.Partial.Ext.Prim
                         Control.Isomorphism.Partial.Ext.Constructors
+                        Control.Isomorphism.Partial.Ext.Data
                         Control.Isomorphism.Partial.Ext
                         Text.Syntax.Poly.Class
                         Text.Syntax.Poly.Type

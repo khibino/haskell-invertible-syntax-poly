@@ -1,27 +1,22 @@
-
-------------------------------------------------------------
 -- |
 -- Module      : Control.Isomorphism.Partial.Ext.Prim
--- Copyright   : (c) Kei Hibino 2012
--- Licese      : BSD3
--- 
+-- Copyright   : Kei Hibino 2012
+-- License     : BSD3
+--
 -- Maintainer  : ex8k.hibino@gmail.com
 -- Stability   : experimental
 -- Portability : unknown
 --
--- This module contains utility functions for 
--- Control.Isomorphism.Partial.
-------------------------------------------------------------
-
+-- This module contains utility combinators for @Control.Isomorphism.Partial@.
 module Control.Isomorphism.Partial.Ext.Prim (
   iso, apply', unapply',
   mayAppend',  (||?), mayAppend,
-  mayPrepend', (?||), mayPrepend,
-  succ, singleton,
-  readShow, negate, not, reverse
+  mayPrepend', (?||), mayPrepend
   ) where
 
-import Prelude hiding (id, succ, pred, negate, not, reverse)
+
+
+import Prelude hiding (id)
 import qualified Prelude as P
 import Control.Category (id)
 import Control.Isomorphism.Partial.Prim (inverse, apply, unapply)
@@ -83,34 +78,3 @@ mayPrepend =  (?|| id)
 
 infixr 6 ||?
 infixl 6 ?||
-
--- | Church number succ isomorphism
-succ :: Enum a => Iso a a
-succ =  Iso f g  where
-  f = Just . P.succ
-  g n | fromEnum n <= 0 = Nothing
-      | otherwise       = Just . P.pred $ n
-
--- | A value and singleton list
-singleton :: Iso a [a]
-singleton = Iso f g where
-  f = Just . (:[])
-  g [x] = Just x
-  g _   = Nothing
-
-
--- | Isomorphism from read and show
-readShow :: (Read a, Show a) => Iso String a
-readShow =  iso read show
-
--- | negate number
-negate :: Num a => Iso a a
-negate =  iso P.negate P.negate
-
--- | negate boolean
-not :: Iso Bool Bool
-not =  iso P.not P.not
-
--- | list reverse
-reverse :: Iso [a] [a]
-reverse =  iso P.reverse P.reverse
