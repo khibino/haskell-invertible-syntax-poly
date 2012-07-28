@@ -25,8 +25,7 @@ import Control.Monad (MonadPlus(mzero, mplus))
 
 import Text.Syntax.Parser.Instances ()
 import Text.Syntax.Poly.Class
-  (TryAlternative, Syntax (token, fail))
-import Text.Syntax.Poly.Combinators (list)
+  (TryAlternative, Syntax (token))
 import Text.Syntax.Poly.Type (RunParser, ErrorString, errorString)
 
 type ErrorStack = [ErrorString]
@@ -42,6 +41,7 @@ instance Monad (Parser tok) where
                                 Good a s'   -> case runParser (fb a) s' e of
                                   !rv -> rv
                                 Bad e'      -> Bad $ e' ++ e)
+  fail msg  = Parser (\_ e -> Bad $ errorString msg : e)
 
 instance MonadPlus (Parser tok) where
   mzero = Parser $ const Bad
@@ -57,7 +57,6 @@ instance Eq tok => Syntax tok (Parser tok) where
   token = Parser (\s e -> case s of
                      t:ts -> Good t ts
                      []   -> Bad $ errorString "eof" : e)
-  fail msg = Parser (\_ e -> Bad $ errorString msg : e)
 
 runPolyParser :: Eq tok => RunParser tok [tok] a ErrorStack
 runPolyParser parser s = case runParser parser s [] of

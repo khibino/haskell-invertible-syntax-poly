@@ -17,8 +17,8 @@ module Text.Syntax.Poly.Class (
   ProductFunctor((<*>)),
   IsoAlternative((<||>), empty),
   TryAlternative((<|>), try),
-  AbstractSyntax(syntax),
-  Syntax(token, fail)
+  AbstractSyntax(syntax, syntaxError),
+  Syntax(token)
   ) where
 
 import Control.Isomorphism.Partial (IsoFunctor)
@@ -56,10 +56,10 @@ class (IsoFunctor delta, ProductFunctor delta,
       => AbstractSyntax delta  where
   -- | Lift a value.
   syntax :: Eq alpha => alpha -> delta alpha
-  
+  syntaxError :: String -> delta alpha
+  syntaxError =  const empty
+
 -- | Syntax abstraction with token type @tok@.
 class AbstractSyntax delta => Syntax tok delta where
   -- | Get a token from stream.
   token :: delta tok
-  fail  :: String -> delta a
-  fail  =  const empty

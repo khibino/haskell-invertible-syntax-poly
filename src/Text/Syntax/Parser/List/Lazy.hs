@@ -39,6 +39,7 @@ instance Monad (Parser tok) where
   return a = Parser $ \s _ -> Right (a, s)
   Parser p >>= fb = Parser (\s e -> do (a, s') <- p s e
                                        runParser (fb a) s' e)
+  fail msg = Parser (\_ e -> Left $ errorString msg : e)
 
 instance MonadPlus (Parser tok) where
   mzero = Parser $ const Left
@@ -53,7 +54,6 @@ instance Eq tok => Syntax tok (Parser tok) where
   token = Parser (\s e -> case s of
                      t:ts -> Right (t, ts)
                      []   -> Left $ errorString "The end of token stream." : e)
-  fail msg = Parser (\_ e -> Left $ errorString msg : e)
 
 runPolyParser :: Eq tok => RunParser tok [tok] a ErrorStack
 runPolyParser parser s = do (a, s') <- runParser parser s []

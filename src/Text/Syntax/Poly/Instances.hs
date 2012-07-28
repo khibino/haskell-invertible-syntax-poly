@@ -22,7 +22,7 @@ import Control.Isomorphism.Partial (IsoFunctor)
 import Text.Syntax.Poly.Class
   (ProductFunctor((<*>)),
    IsoAlternative((<||>), empty), TryAlternative,
-   AbstractSyntax(syntax))
+   AbstractSyntax(syntax, syntaxError))
 
 -- | Instances on MonadPlus contexts 
 -- which are prerequisites for syntax definitions
@@ -38,3 +38,4 @@ instance MonadPlus m => IsoAlternative m where
 
 instance (IsoFunctor m, MonadPlus m, TryAlternative m) => AbstractSyntax m where
   syntax = return
+  syntaxError = fail
