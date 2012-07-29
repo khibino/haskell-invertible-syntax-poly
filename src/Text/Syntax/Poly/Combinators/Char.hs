@@ -41,7 +41,7 @@ dot =  this '.'
 -- no space while printing. 
 
 skipSpace  ::  Syntax Char delta => delta ()
-skipSpace  =   ignore []    <$>  many (this ' ')
+skipSpace  =   ignore []  <$>  many (this ' ')
  
 -- | `optSpace` marks a position where whitespace is desired to occur.
 -- It accepts arbitrary space while parsing, and produces a 
