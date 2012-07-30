@@ -25,6 +25,9 @@ module Text.Syntax.Poly.Combinators (
   sepBy, sepBy1,
   chainl1,
   count,
+  -- * Skipping
+  skipMany,
+  skipSome,
   -- * Sequencing
   (*>),
   (<*),
@@ -123,6 +126,16 @@ chainl1 arg op f
 -- | The `count` combinator counts fixed syntax.
 count :: (Eq beta, Enum beta, AbstractSyntax delta) => delta () -> delta beta
 count p = succ <$> p *> count p <|> syntax (toEnum 0)
+
+-- | The @skipMany p@ parse the passed syntax @p@
+--   zero or more than zero times, and print nothing.
+skipMany :: AbstractSyntax delta => delta alpha -> delta ()
+skipMany p = ignore [] <$> many p
+
+-- | The @skipSome v p@ parse the passed syntax @p@
+--   more than zero times, and print @p@.
+skipSome :: AbstractSyntax delta => delta alpha -> delta alpha
+skipSome p = p <* skipMany p
 
 -- | `choice` a syntax from list.
 choice :: AbstractSyntax delta => [delta alpha] -> delta alpha
