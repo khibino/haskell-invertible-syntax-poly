@@ -18,7 +18,7 @@ module Text.Syntax.Parser.List.StrictMaybe (
   -- * Syntax instance Parser type
   Parser, runParser, Result(..),
   -- * Poly- morphic wrapper of runParser
-  runPolyParser
+  runAsParser
   ) where
 
 import Control.Monad (MonadPlus(mzero, mplus))
@@ -57,8 +57,8 @@ instance Eq tok => Syntax tok (Parser tok) where
                      t:ts -> Good t ts
                      []   -> Bad)
 
-runPolyParser :: Eq tok => RunAsParser tok a ErrorString
-runPolyParser parser s = case runParser parser s of
+runAsParser :: Eq tok => RunAsParser tok a ErrorString
+runAsParser parser s = case runParser parser s of
   Good x []    -> Right x
   Good _ (_:_) -> Left  $ errorString "Not the end of token stream."
   Bad          -> Left  $ errorString "StrictList: parse error."

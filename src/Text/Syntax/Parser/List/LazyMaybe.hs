@@ -17,7 +17,7 @@ module Text.Syntax.Parser.List.LazyMaybe (
   -- * Syntax instance Parser type
   Parser, runParser,
   -- * Poly- morphic wrapper of runParser
-  runPolyParser
+  runAsParser
   ) where
 
 import Control.Monad (MonadPlus(mzero, mplus))
@@ -47,10 +47,9 @@ instance Eq tok => Syntax tok (Parser tok) where
                      t:ts -> Just (t, ts)
                      []   -> Nothing)
 
-runPolyParser :: Eq tok => RunAsParser tok a ErrorString
-runPolyParser parser s =
-  case runParser parser s of
-    Just (a, [])    -> Right a
-    Just (_, (_:_)) -> Left . errorString $ "Not the end of token stream."
-    Nothing         -> Left . errorString $ "parse error"
+runAsParser :: Eq tok => RunAsParser tok a ErrorString
+runAsParser parser s = case runParser parser s of
+  Just (a, [])    -> Right a
+  Just (_, (_:_)) -> Left . errorString $ "Not the end of token stream."
+  Nothing         -> Left . errorString $ "parse error"
 

@@ -19,7 +19,7 @@ module Text.Syntax.Printer.List (
   -- * Print action
   printM,
   -- * Poly-morphic wrapper of runPrinter
-  RunAsPrinter, RunAsStringPrinter, runPolyPrinter
+  RunAsPrinter, RunAsStringPrinter, runAsPrinter
   ) where
 
 import Control.Isomorphism.Partial (IsoFunctor ((<$>)), unapply)
@@ -66,7 +66,7 @@ instance Eq tok => Syntax tok (Printer tok) where
 type RunAsPrinter tok a e = T.RunPrinter tok [tok] a e
 type RunAsStringPrinter a e = RunAsPrinter Char a e
 
-runPolyPrinter :: Eq tok => RunAsPrinter tok a ErrorString
-runPolyPrinter printer = maybe (Left . errorString $ "print error") Right
-                         . runPrinter printer
+runAsPrinter :: Eq tok => RunAsPrinter tok a ErrorString
+runAsPrinter printer = maybe (Left . errorString $ "print error") Right
+                       . runPrinter printer
 

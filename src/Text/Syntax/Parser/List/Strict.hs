@@ -18,7 +18,7 @@ module Text.Syntax.Parser.List.Strict (
   -- * Syntax instance Parser type
   Parser, runParser, Result(..), ErrorStack,
   -- * Poly- morphic wrapper of runParser
-  runPolyParser
+  runAsParser
   ) where
 
 import Control.Monad (MonadPlus(mzero, mplus))
@@ -56,8 +56,8 @@ instance Eq tok => Syntax tok (Parser tok) where
                      t:ts -> Good t ts
                      []   -> Bad $ errorString "eof" : e)
 
-runPolyParser :: Eq tok => RunAsParser tok a ErrorStack
-runPolyParser parser s = case runParser parser s [] of
+runAsParser :: Eq tok => RunAsParser tok a ErrorStack
+runAsParser parser s = case runParser parser s [] of
   Good x []    -> Right x
   Good _ (_:_) -> Left  [errorString "Not the end of token stream."]
   Bad  err     -> Left  err

@@ -19,7 +19,7 @@ module Text.Syntax.Parser.List.Compose (
   -- * Syntax instance Parser type
   Parser, runParser, Result,
   -- * Poly- morphic wrapper of runParser
-  runPolyParser
+  runAsParser
   ) where
 
 import Control.Monad (MonadPlus(mzero, mplus))
@@ -69,6 +69,6 @@ instance Eq tok => Syntax tok (Parser tok) where
                    t:ts -> Good t ts
                    []   -> Bad)
 
-runPolyParser :: Eq tok => RunAsParser tok a ErrorString
-runPolyParser parser = maybe (Left . errorString $ "parse error") Right
-                       . maybeOfResult . runParser parser
+runAsParser :: Eq tok => RunAsParser tok a ErrorString
+runAsParser parser = maybe (Left . errorString $ "parse error") Right
+                     . maybeOfResult . runParser parser
