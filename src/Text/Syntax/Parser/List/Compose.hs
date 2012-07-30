@@ -27,7 +27,7 @@ import Control.Monad (MonadPlus(mzero, mplus))
 import Text.Syntax.Parser.Instances ()
 import Text.Syntax.Poly.Class
   (TryAlternative, Syntax (token))
-import Text.Syntax.Poly.Type (RunParser, ErrorString, errorString)
+import Text.Syntax.Parser.List.Type (RunAsParser, ErrorString, errorString)
 
 data Result a tok = Good !a ![tok] | Bad
 
@@ -69,6 +69,6 @@ instance Eq tok => Syntax tok (Parser tok) where
                    t:ts -> Good t ts
                    []   -> Bad)
 
-runPolyParser :: Eq tok => RunParser tok [tok] a ErrorString
+runPolyParser :: Eq tok => RunAsParser tok a ErrorString
 runPolyParser parser = maybe (Left . errorString $ "parse error") Right
                        . maybeOfResult . runParser parser

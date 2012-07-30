@@ -19,7 +19,7 @@ module Text.Syntax.Printer.List (
   -- * Print action
   printM,
   -- * Poly-morphic wrapper of runPrinter
-  runPolyPrinter
+  RunAsPrinter, RunAsStringPrinter, runPolyPrinter
   ) where
 
 import Control.Isomorphism.Partial (IsoFunctor ((<$>)), unapply)
@@ -29,8 +29,8 @@ import Text.Syntax.Poly.Class
   (ProductFunctor ((<*>)),
    IsoAlternative ((<||>), empty), TryAlternative,
    AbstractSyntax (syntax), Syntax (token))
-import Text.Syntax.Poly.Combinators (list)
-import Text.Syntax.Poly.Type (RunPrinter, ErrorString, errorString)
+import Text.Syntax.Poly.Type (ErrorString, errorString)
+import qualified Text.Syntax.Poly.Type as T
 
 
 newtype Printer tok alpha =
@@ -63,7 +63,10 @@ instance AbstractSyntax (Printer tok) where
 instance Eq tok => Syntax tok (Printer tok) where
   token  = Printer (\t -> Just [t])
 
-runPolyPrinter :: Eq tok => RunPrinter tok [tok] a ErrorString
+type RunAsPrinter tok a e = T.RunPrinter tok [tok] a e
+type RunAsStringPrinter a e = RunAsPrinter Char a e
+
+runPolyPrinter :: Eq tok => RunAsPrinter tok a ErrorString
 runPolyPrinter printer = maybe (Left . errorString $ "print error") Right
                          . runPrinter printer
 
