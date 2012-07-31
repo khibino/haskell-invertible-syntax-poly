@@ -18,7 +18,7 @@ module Text.Syntax.Parser.List.Lazy (
   -- * Syntax instance Parser type
   Parser, runParser, ErrorStack,
   -- * Poly- morphic wrapper of runParser
-  runPolyParser
+  runAsParser
   ) where
 
 import Control.Monad (MonadPlus(mzero, mplus))
@@ -53,8 +53,8 @@ instance Eq tok => Syntax tok (Parser tok) where
                      t:ts -> Right (t, ts)
                      []   -> Left $ errorString "The end of token stream." : e)
 
-runPolyParser :: Eq tok => RunAsParser tok a ErrorStack
-runPolyParser parser s =
+runAsParser :: Eq tok => RunAsParser tok a ErrorStack
+runAsParser parser s =
   do (a, s') <- runParser parser s []
      if s' == []
        then Right a
