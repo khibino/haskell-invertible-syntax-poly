@@ -21,6 +21,7 @@ import qualified Prelude as P
 
 import Data.Maybe (listToMaybe)
 import Data.Char (intToDigit, digitToInt, ord, chr)
+import Data.List (foldl')
 import Numeric (readOct, showOct, readHex, showHex, floatToDigits)
 
 import Control.Isomorphism.Partial.Unsafe (Iso (Iso))
@@ -77,15 +78,18 @@ hex =  Iso f g where
   f =  fmap fst . listToMaybe . readHex
   g =  Just . (`showHex` "")
 
-signumAbs :: Num a => Iso (a, a) a
+signumAbs :: (Num a, Eq a) => Iso (a, a) a
 signumAbs =  iso f g  where
   f (x, y) = x * y
+  g 0      = (1, 0)
   g v      = (signum v, abs v)
 
 digitsFloat :: RealFloat a => Iso ([Int], Int) a
 digitsFloat =  iso f g where
-  f (ds, e) = foldr (\d v -> (v + fromIntegral d) / 10) 0 ds
-              * 10 ^ e
+  f (ds, e) | e' >= 0   = dv * 10 ^ e'
+            | otherwise = dv / 10 ^ (- e')
+    where dv = foldl' (\v d -> v * 10 + fromIntegral d) 0 ds
+          e' = e - length ds
   g = floatToDigits 10
 
 floatTripleDigits :: Iso (String, (String, Int)) ([Int], Int)
