@@ -34,6 +34,7 @@ instance Monad (Parser tok) where
   return a = Parser $ \s -> Just (a, s)
   Parser p >>= fb = Parser (\s -> do (a, s') <- p s
                                      runParser (fb a) s')
+  fail = const mzero
 
 instance MonadPlus (Parser tok) where
   mzero = Parser $ const Nothing

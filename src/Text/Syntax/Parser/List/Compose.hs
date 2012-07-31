@@ -56,7 +56,8 @@ runParser p0 s0 = let z = d p0 s0 in z `seq` z  where
 
 instance Monad (Parser tok) where
   return = Prim . Good
-  (>>=) = (:>>=)
+  (>>=)  = (:>>=)
+  fail = const mzero
 
 instance MonadPlus (Parser tok) where
   mzero = Prim $ const Bad

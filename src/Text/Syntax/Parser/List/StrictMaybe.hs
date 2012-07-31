@@ -40,6 +40,7 @@ instance Monad (Parser tok) where
                                  good@(Good !_ _) -> good
                                  Bad              -> Bad
                                Bad                -> Bad)
+  fail = const mzero
 
 instance MonadPlus (Parser tok) where
   mzero = Parser $ const Bad
