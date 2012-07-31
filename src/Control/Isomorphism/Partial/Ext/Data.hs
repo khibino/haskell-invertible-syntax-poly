@@ -13,11 +13,12 @@ module Control.Isomorphism.Partial.Ext.Data (
   succ, singleton,
   readShow, negate, not, reverse,
   digitInt, chrOrd, oct, hex,
-  signumAbs, digitsFloat, floatTripleDigits
+  signumAbs, digitsFloat, floatTripleDigits, floatTriple
   ) where
 
-import Prelude hiding (id, succ, pred, negate, not, reverse)
+import Prelude hiding (id, succ, pred, negate, not, reverse, (.))
 import qualified Prelude as P
+import Control.Category ((.))
 
 import Data.Maybe (listToMaybe)
 import Data.Char (intToDigit, digitToInt, ord, chr)
@@ -96,3 +97,6 @@ floatTripleDigits :: Iso (String, (String, Int)) ([Int], Int)
 floatTripleDigits =  iso p q  where
   p (i, (f, e)) = (map digitToInt (i ++ f), length i + e)
   q (ds, e)     = ("", (map intToDigit ds, e))
+
+floatTriple :: RealFloat a => Iso (String, (String, Int)) a
+floatTriple =  digitsFloat . floatTripleDigits
