@@ -17,14 +17,14 @@ module Text.Syntax.Check.Prim (
   printParseIsoDefault', printParseIsoDefault
   ) where
 
-import Text.Syntax.Poly.Type (SyntaxT, RunParser, RunPrinter)
+import Text.Syntax.Poly.Type (SyntaxT, RunAsParser, RunAsPrinter)
 
 import Text.Syntax.Printer.List (runAsPrinter)
 import Text.Syntax.Parser.List.LazyMaybe  (runAsParser)
 
 -- | Run print and parse series, then check the equality between input and output.
 printParseIso' :: (Eq a, Show e0, Show e1) =>
-                  RunPrinter tok tks a e0 -> RunParser tok tks a e1 ->
+                  RunAsPrinter tok tks a e0 -> RunAsParser tok tks a e1 ->
                   SyntaxT tok a -> a -> Either String a
 printParseIso' runPrint runParse syntax tree0 =
   do tks   <- either (Left . show) Right $ runPrint syntax tree0
@@ -35,7 +35,7 @@ printParseIso' runPrint runParse syntax tree0 =
 
 -- | Run parse, print and parse series, then check the quality between first and second AST.
 printParseIso :: (Eq a, Show e0, Show e1) =>
-                 RunPrinter tok tks a e0 -> RunParser tok tks a e1
+                 RunAsPrinter tok tks a e0 -> RunAsParser tok tks a e1
                  -> SyntaxT tok a -> tks -> Either String a
 printParseIso runPrint runParse syntax tks0 =
   do tree0 <- either (Left . show) Right $ runParse syntax tks0

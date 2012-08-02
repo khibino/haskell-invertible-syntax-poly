@@ -62,7 +62,7 @@ instance AbstractSyntax (Printer tok) where
 instance Eq tok => Syntax tok (Printer tok) where
   token  = Printer (\t -> Just [t])
 
-type RunAsPrinter tok a e = T.RunPrinter tok [tok] a e
+type RunAsPrinter tok a e = T.RunAsPrinter tok [tok] a e
 type RunAsStringPrinter a e = RunAsPrinter Char a e
 
 runAsPrinter :: Eq tok => RunAsPrinter tok a ErrorString

@@ -28,7 +28,7 @@ import qualified Text.Syntax.Poly.Type as T
 type ErrorStack = [ErrorString]
 
 -- | Type to run invertible syntax definitions as parsers
-type RunAsParser tok a e = T.RunParser tok [tok] a e
+type RunAsParser tok a e = T.RunAsParser tok [tok] a e
 
 -- | Case of @RunAsParser@ when token is @Char@ type
 type RunAsStringParser a e = RunAsParser Char a e
