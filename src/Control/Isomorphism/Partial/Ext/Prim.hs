@@ -8,6 +8,7 @@
 -- Portability : unknown
 --
 -- This module contains utility combinators for @Control.Isomorphism.Partial@.
+
 module Control.Isomorphism.Partial.Ext.Prim (
   iso, apply', unapply',
   mayAppend',  (||?), mayAppend,

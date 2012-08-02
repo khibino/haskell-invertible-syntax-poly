@@ -1,7 +1,6 @@
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE FlexibleInstances #-}
 
-----------------------------------------------------------------------------
 -- |
 -- Module      : Text.Syntax.Printer.List
 -- Copyright   : 2012 Kei Hibino
@@ -12,7 +11,7 @@
 -- Portability : unknown
 --
 -- This module includes a naive printer implementation for invertible-syntax-poly.
-----------------------------------------------------------------------------
+
 module Text.Syntax.Printer.List (
   -- * Syntax instance Printer type
   Printer, runPrinter,

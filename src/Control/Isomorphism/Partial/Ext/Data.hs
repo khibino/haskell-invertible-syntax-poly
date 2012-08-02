@@ -9,6 +9,7 @@
 --
 -- This module contains isomorphism definitions of basic
 -- data types for Control.Isomorphism.Partial.
+
 module Control.Isomorphism.Partial.Ext.Data (
   succ, singleton,
   readShow, negate, not, reverse,

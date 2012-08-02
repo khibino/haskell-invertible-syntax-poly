@@ -1,7 +1,7 @@
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE FlexibleInstances #-}
 
-----------------------------------------------------------------------------
+
 -- |
 -- Module      : Text.Syntax.Parser.List.LazyMaybe
 -- Copyright   : 2012 Kei Hibino
@@ -12,7 +12,7 @@
 -- Portability : unknown
 --
 -- This module includes a naive parser implementation for invertible-syntax-poly.
-----------------------------------------------------------------------------
+
 module Text.Syntax.Parser.List.LazyMaybe (
   -- * Syntax instance Parser type
   Parser, runParser,

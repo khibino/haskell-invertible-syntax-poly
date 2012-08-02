@@ -1,6 +1,5 @@
 {-# LANGUAGE Rank2Types #-}
 
-----------------------------------------------------------------------------
 -- |
 -- Module      : Text.Syntax.Poly.Type
 -- Copyright   : 2012 Kei Hibino
@@ -11,7 +10,6 @@
 -- Portability : unknown
 --
 -- Type synonyms to represent syntax which has forall type value.
-----------------------------------------------------------------------------
 
 module Text.Syntax.Poly.Type (
   -- * Syntax type

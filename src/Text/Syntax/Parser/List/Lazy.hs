@@ -1,7 +1,6 @@
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE FlexibleInstances #-}
 
-----------------------------------------------------------------------------
 -- |
 -- Module      : Text.Syntax.Parser.List.Lazy
 -- Copyright   : 2012 Kei Hibino
@@ -13,7 +12,7 @@
 --
 -- This module includes a naive parser implementation for invertible-syntax-poly.
 -- The same as Text.Syntax.Parser.List other than result Either type.
-----------------------------------------------------------------------------
+
 module Text.Syntax.Parser.List.Lazy (
   -- * Syntax instance Parser type
   Parser, runParser, ErrorStack,

@@ -1,7 +1,6 @@
 {-# LANGUAGE FlexibleInstances #-}
 {-# LANGUAGE UndecidableInstances #-}
 
-----------------------------------------------------------------------------
 -- |
 -- Module      : Text.Syntax.Parser.Instances
 -- Copyright   : 2012 Kei Hibino
@@ -12,7 +11,6 @@
 -- Portability : unknown
 --
 -- This module contains parsers instances of invertible-syntax-poly classes.
-----------------------------------------------------------------------------
 
 module Text.Syntax.Parser.Instances () where
 

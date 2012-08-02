@@ -1,4 +1,3 @@
-----------------------------------------------------------------------------
 -- |
 -- Module      : Text.Syntax.Parser.List.Type
 -- Copyright   : 2012 Kei Hibino
@@ -10,7 +9,6 @@
 --
 -- This module includes a naive parser implementation for invertible-syntax-poly.
 -- The same as Text.Syntax.Parser.List other than result Either type.
-----------------------------------------------------------------------------
 
 module Text.Syntax.Parser.List.Type (
 

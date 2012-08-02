@@ -2,7 +2,6 @@
 {-# LANGUAGE FlexibleInstances #-}
 {-# LANGUAGE ExistentialQuantification #-}
 
-----------------------------------------------------------------------------
 -- |
 -- Module      : Text.Syntax.Parser.List.Compose
 -- Copyright   : 2012 Kei Hibino
@@ -14,7 +13,7 @@
 --
 -- This module includes a naive parser implementation for invertible-syntax-poly.
 -- composed parser function is not cached and composed every needed time.
-----------------------------------------------------------------------------
+
 module Text.Syntax.Parser.List.Compose (
   -- * Syntax instance Parser type
   Parser, runParser, Result,

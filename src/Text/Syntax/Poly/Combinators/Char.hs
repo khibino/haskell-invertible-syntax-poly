@@ -1,6 +1,5 @@
 {-# LANGUAGE FlexibleContexts #-}
 
-----------------------------------------------------------------------------
 -- |
 -- Module      : Text.Syntax.Poly.Combinators.Char
 -- Copyright   : 2010-11 University of Marburg, 2012 Kei Hibino
@@ -11,7 +10,6 @@
 -- Portability : unknown
 --
 -- This module contains `Char` combinators for invertible-syntax-poly classes.
-----------------------------------------------------------------------------
 
 module Text.Syntax.Poly.Combinators.Char (
   -- * Lexemes

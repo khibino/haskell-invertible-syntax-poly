@@ -1,5 +1,4 @@
 
-----------------------------------------------------------------------------
 -- |
 -- Module      : Text.Syntax.Poly
 -- Copyright   : 2012 Kei Hibino
@@ -9,7 +8,6 @@
 -- Stability   : experimental
 -- Portability : unknown
 --
-----------------------------------------------------------------------------
 
 module Text.Syntax.Poly (
   module Exports

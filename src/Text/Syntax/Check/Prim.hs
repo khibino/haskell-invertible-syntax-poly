@@ -1,7 +1,6 @@
 {-# LANGUAGE Rank2Types #-}
 {-# LANGUAGE FlexibleContexts #-}
 
-----------------------------------------------------------------------------
 -- |
 -- Module      : Text.Syntax.Check.Prim
 -- Copyright   : 2012 Kei Hibino, 2010-11 University of Marburg
@@ -12,7 +11,6 @@
 -- Portability : unknown
 --
 -- This module contains isomorphism check function.
-----------------------------------------------------------------------------
 
 module Text.Syntax.Check.Prim (
   printParseIso', printParseIso,

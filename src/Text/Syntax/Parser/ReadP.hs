@@ -1,7 +1,6 @@
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE FlexibleInstances, UndecidableInstances #-}
 
-----------------------------------------------------------------------------
 -- |
 -- Module      : Text.Syntax.Poly.Parser.ReadP
 -- Copyright   : 2012 Kei Hibino
@@ -13,7 +12,7 @@
 --
 -- This module includes invertible-syntax-poly instance implementation for ReadP.
 -- Token may be polimorphic.
-----------------------------------------------------------------------------
+
 module Text.Syntax.Parser.ReadP (runPolyParser) where
 
 import Data.List (find)

@@ -1,6 +1,5 @@
 {-# LANGUAGE MultiParamTypeClasses #-}
 
-----------------------------------------------------------------------------
 -- |
 -- Module      : Text.Syntax.Poly.Class
 -- Copyright   : 2012 Kei Hibino, 2010-11 University of Marburg
@@ -11,7 +10,6 @@
 -- Portability : unknown
 --
 -- This module contains invertible-syntax-poly classes.
-----------------------------------------------------------------------------
 
 module Text.Syntax.Poly.Class (
   ProductFunctor((<*>)),

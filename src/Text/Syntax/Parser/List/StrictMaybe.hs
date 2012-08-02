@@ -2,7 +2,6 @@
 {-# LANGUAGE FlexibleInstances #-}
 {-# LANGUAGE BangPatterns #-}
 
-----------------------------------------------------------------------------
 -- |
 -- Module      : Text.Syntax.Parser.List.StrictMaybe
 -- Copyright   : 2012 Kei Hibino
@@ -13,7 +12,7 @@
 -- Portability : unknown
 --
 -- This module includes a strict parser implementation for invertible-syntax-poly.
-----------------------------------------------------------------------------
+
 module Text.Syntax.Parser.List.StrictMaybe (
   -- * Syntax instance Parser type
   Parser, runParser, Result(..),
