@@ -13,15 +13,14 @@
 -- This module includes invertible-syntax-poly instance implementation for ReadP.
 -- Token may be polimorphic.
 
-module Text.Syntax.Parser.ReadP (runPolyParser) where
+module Text.Syntax.Parser.ReadP (runAsParser) where
 
 import Data.List (find)
 
 import Text.Syntax.Parser.Instances ()
 import Text.Syntax.Poly.Class
   (TryAlternative, Syntax(token))
-import Text.Syntax.Poly.Combinators (list)
-import Text.Syntax.Poly.Type (RunParser, ErrorString, errorString)
+import Text.Syntax.Poly.Type (RunAsParser, ErrorString, errorString)
 
 import Text.ParserCombinators.ReadP (ReadP, get, readP_to_S)
 
@@ -30,8 +29,8 @@ instance TryAlternative ReadP
 instance Syntax Char ReadP where
   token = get
 
-runPolyParser :: RunParser Char String a ErrorString
-runPolyParser parser s =
+runAsParser :: RunAsParser Char String a ErrorString
+runAsParser parser s =
   case find ((== []) . snd) $ readP_to_S parser s of
     Just (a, _) -> Right a
     Nothing     -> Left $ errorString "parse error"
