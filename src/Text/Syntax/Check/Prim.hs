@@ -13,8 +13,8 @@
 -- This module contains isomorphism check function.
 
 module Text.Syntax.Check.Prim (
-  printParseIso', printParseIso,
-  printParseIsoDefault', printParseIsoDefault
+  printParseIso0, printParseIso,
+  printParseIso0Default, printParseIsoDefault
   ) where
 
 import Text.Syntax.Poly.Type (SyntaxT, RunAsParser, RunAsPrinter)
@@ -23,10 +23,10 @@ import Text.Syntax.Printer.List (runAsPrinter)
 import Text.Syntax.Parser.List.LazyMaybe  (runAsParser)
 
 -- | Run print and parse series, then check the equality between input and output.
-printParseIso' :: (Eq a, Show e0, Show e1) =>
+printParseIso0 :: (Eq a, Show e0, Show e1) =>
                   RunAsPrinter tok tks a e0 -> RunAsParser tok tks a e1 ->
                   SyntaxT tok a -> a -> Either String a
-printParseIso' runPrint runParse syntax tree0 =
+printParseIso0 runPrint runParse syntax tree0 =
   do tks   <- either (Left . show) Right $ runPrint syntax tree0
      tree1 <- either (Left . show) Right $ runParse syntax tks
      if tree0 == tree1
@@ -39,11 +39,11 @@ printParseIso :: (Eq a, Show e0, Show e1) =>
                  -> SyntaxT tok a -> tks -> Either String a
 printParseIso runPrint runParse syntax tks0 =
   do tree0 <- either (Left . show) Right $ runParse syntax tks0
-     printParseIso' runPrint runParse syntax tree0
+     printParseIso0 runPrint runParse syntax tree0
 
 -- | Run print and parse series with naive implementations, then check the equality between input and output.
-printParseIsoDefault' :: (Eq tok, Eq a) => SyntaxT tok a -> a -> Either String a
-printParseIsoDefault' =  printParseIso' runAsPrinter runAsParser
+printParseIso0Default :: (Eq tok, Eq a) => SyntaxT tok a -> a -> Either String a
+printParseIso0Default =  printParseIso0 runAsPrinter runAsParser
 
 -- | Run parse, print and parse series with naive implementations, then check the equality between first and second AST.
 printParseIsoDefault :: (Eq tok, Eq a) => SyntaxT tok a -> [tok] -> Either String a
