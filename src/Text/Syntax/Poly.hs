@@ -10,11 +10,17 @@
 --
 
 module Text.Syntax.Poly (
-  module Exports
+  module Text.Syntax.Poly.Class,
+  module Text.Syntax.Poly.Type,
+  -- module Text.Syntax.Poly.Instances,
+  module Text.Syntax.Poly.Combinators,
+  module Text.Syntax.Poly.Combinators.Char,
   ) where
 
-import Text.Syntax.Poly.Class as Exports
-import Text.Syntax.Poly.Type as Exports
--- import Text.Syntax.Poly.Instances as Exports
-import Text.Syntax.Poly.Combinators as Exports
-import Text.Syntax.Poly.Combinators.Char as Exports
+import Text.Syntax.Poly.Class
+import Text.Syntax.Poly.Type
+-- import Text.Syntax.Poly.Instances
+import Text.Syntax.Poly.Combinators
+import Text.Syntax.Poly.Combinators.Char
+
+{-# ANN module "ignore import/export shortcut" #-}

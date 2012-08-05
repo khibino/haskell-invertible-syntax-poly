@@ -8,16 +8,24 @@
 -- Portability : unknown
 
 module Control.Isomorphism.Partial.Ext (
-  module Exports
+  -- * Original definitions
+  module Control.Isomorphism.Partial,
+
+  -- * Operator to compose Iso
+  module Control.Category,
+
+  -- * Additional definitions
+  module Control.Isomorphism.Partial.Ext.Prim,
+  module Control.Isomorphism.Partial.Ext.Constructors,
+  module Control.Isomorphism.Partial.Ext.Data
   ) where
 
--- Original definitions
-import Control.Isomorphism.Partial as Exports
+import Control.Isomorphism.Partial
 
--- Operator to compose Iso
-import Control.Category as Exports ((.))
+import Control.Category ((.))
 
--- Additional definitions
-import Control.Isomorphism.Partial.Ext.Prim         as Exports
-import Control.Isomorphism.Partial.Ext.Constructors as Exports
-import Control.Isomorphism.Partial.Ext.Data         as Exports
+import Control.Isomorphism.Partial.Ext.Prim
+import Control.Isomorphism.Partial.Ext.Constructors
+import Control.Isomorphism.Partial.Ext.Data
+
+{-# ANN module "ignore import/export shortcut" #-}
