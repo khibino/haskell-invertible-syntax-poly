@@ -10,8 +10,7 @@
 -- Stability   : experimental
 -- Portability : unknown
 --
--- This module contains parsers instances of invertible-syntax-poly classes.
-
+-- This module contains basic parsers instances for 'Syntax'.
 module Text.Syntax.Parser.Instances () where
 
 import Control.Isomorphism.Partial (IsoFunctor((<$>)))

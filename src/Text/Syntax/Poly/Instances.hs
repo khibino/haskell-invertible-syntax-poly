@@ -10,8 +10,7 @@
 -- Stability   : experimental
 -- Portability : unknown
 --
--- This module contains instances of invertible-syntax-poly classes.
-
+-- This module contains basic instance definitions for classes defined in "Text.Syntax.Poly.Class".
 module Text.Syntax.Poly.Instances () where
 
 import Control.Monad (MonadPlus (mzero, mplus))

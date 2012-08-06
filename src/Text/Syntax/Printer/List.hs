@@ -10,8 +10,7 @@
 -- Stability   : experimental
 -- Portability : unknown
 --
--- This module includes a naive printer implementation for invertible-syntax-poly.
-
+-- This module includes a naive printer implementation for 'Syntax'.
 module Text.Syntax.Printer.List (
   -- * Syntax instance Printer type
   Printer, runPrinter,

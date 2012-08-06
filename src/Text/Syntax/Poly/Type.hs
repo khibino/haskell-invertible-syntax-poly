@@ -9,8 +9,7 @@
 -- Stability   : experimental
 -- Portability : unknown
 --
--- Type synonyms to represent 'Syntax' types which has forall type value.
-
+-- This module contains handy Rank2 type synonyms which has 'Syntax' contexts.
 module Text.Syntax.Poly.Type (
   -- * 'Syntax' type
   SyntaxT,

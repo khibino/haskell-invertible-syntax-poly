@@ -8,7 +8,7 @@
 -- Stability   : experimental
 -- Portability : unknown
 --
-
+-- Integrated namespace for invertible syntax
 module Text.Syntax.Poly (
   module Text.Syntax.Poly.Class,
   module Text.Syntax.Poly.Type,

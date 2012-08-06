@@ -9,8 +9,7 @@
 -- Stability   : experimental
 -- Portability : unknown
 --
--- This module contains `Char` combinators for invertible-syntax-poly classes.
-
+-- This module contains 'Char' type combinators for 'Syntax'.
 module Text.Syntax.Poly.Combinators.Char (
   -- * Lexemes
   char,

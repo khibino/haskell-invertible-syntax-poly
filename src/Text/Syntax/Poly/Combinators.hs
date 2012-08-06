@@ -9,8 +9,7 @@
 -- Stability   : experimental
 -- Portability : unknown
 --
--- This module contains combinators for invertible-syntax-poly classes.
-
+-- This module contains combinators for classes defined in "Text.Syntax.Poly.Classes".
 module Text.Syntax.Poly.Combinators (
   -- * Lexemes
   this,
@@ -65,7 +64,9 @@ many p = some p <|> none
 some :: AbstractSyntax delta => delta alpha -> delta [alpha]
 some p = cons <$> p <*> many p
 
-
+-- | The `replicate` combinator is used to repeat syntax.
+-- @replicate n p@ repeats the passwd syntax @p@
+-- @n@ times.
 replicate :: AbstractSyntax delta => Int -> delta alpha -> delta [alpha]
 replicate n' p = rec n' where
   rec n | n <= 0    = none

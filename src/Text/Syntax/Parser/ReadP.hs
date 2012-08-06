@@ -10,9 +10,7 @@
 -- Stability   : experimental
 -- Portability : unknown
 --
--- This module includes invertible-syntax-poly instance implementation for ReadP.
--- Token may be polimorphic.
-
+-- This module includes 'Syntax' instance implementation for ReadP.
 module Text.Syntax.Parser.ReadP (runAsParser) where
 
 import Data.List (find)

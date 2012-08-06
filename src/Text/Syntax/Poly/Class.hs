@@ -9,8 +9,7 @@
 -- Stability   : experimental
 -- Portability : unknown
 --
--- This module contains invertible-syntax-poly classes.
-
+-- This module contains type classes for invertible syntax.
 module Text.Syntax.Poly.Class (
   ProductFunctor((<*>)),
   IsoAlternative((<||>), empty),

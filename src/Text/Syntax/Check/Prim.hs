@@ -10,8 +10,7 @@
 -- Stability   : experimental
 -- Portability : unknown
 --
--- This module contains isomorphism check function.
-
+-- This module contains isomorphism check functions for 'Syntax'.
 module Text.Syntax.Check.Prim (
   printParseIso0, printParseIso,
   printParseIso0Default, printParseIsoDefault
