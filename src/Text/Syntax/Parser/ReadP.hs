@@ -10,8 +10,8 @@
 -- Stability   : experimental
 -- Portability : unknown
 --
--- This module includes 'Syntax' instance implementation for ReadP.
-module Text.Syntax.Parser.ReadP (runAsParser) where
+-- This module includes 'Syntax' instance implementation for 'ReadP'.
+module Text.Syntax.Parser.ReadP (runAsReadP) where
 
 import Data.List (find)
 
@@ -22,13 +22,16 @@ import Text.Syntax.Poly.Type (RunAsParser, ErrorString, errorString)
 
 import Text.ParserCombinators.ReadP (ReadP, get, readP_to_S)
 
+-- | 'TryAlternative' instance of 'ReadP', method definitions is default.
 instance TryAlternative ReadP
 
+-- | 'Syntax' instance of 'Char' and 'ReadP'
 instance Syntax Char ReadP where
   token = get
 
-runAsParser :: RunAsParser Char String a ErrorString
-runAsParser parser s =
+-- | Run syntax as 'ReadP'.
+runAsReadP :: RunAsParser Char String a ErrorString
+runAsReadP parser s =
   case find ((== []) . snd) $ readP_to_S parser s of
     Just (a, _) -> Right a
     Nothing     -> Left $ errorString "parse error"

@@ -7,9 +7,7 @@
 -- Stability   : experimental
 -- Portability : unknown
 --
--- This module includes a naive parser implementation for invertible-syntax-poly.
--- The same as Text.Syntax.Parser.List other than result Either type.
-
+-- This module includes type synonyms for naive parsers.
 module Text.Syntax.Parser.List.Type (
 
   -- * Type to store error state

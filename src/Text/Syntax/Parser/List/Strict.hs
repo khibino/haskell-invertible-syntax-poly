@@ -11,8 +11,7 @@
 -- Stability   : experimental
 -- Portability : unknown
 --
--- This module includes a strict parser implementation for invertible-syntax-poly.
-
+-- This module includes a strict parser implementation for "Text.Syntax.Poly".
 module Text.Syntax.Parser.List.Strict (
   -- * Syntax instance Parser type
   Parser, runParser, Result(..), ErrorStack,
@@ -27,10 +26,15 @@ import Text.Syntax.Poly.Class
   (TryAlternative, Syntax (token))
 import Text.Syntax.Parser.List.Type (RunAsParser, ErrorStack, errorString)
 
+-- | Result type of 'Parser'
 data Result a tok = Good !a ![tok] | Bad !ErrorStack
 
+-- | Naive 'Parser' type. Parse @[tok]@ into @alpha@.
 newtype Parser tok alpha =
-  Parser { runParser :: [tok] -> ErrorStack -> Result alpha tok }
+  Parser {
+    -- | Function to run parser
+    runParser :: [tok] -> ErrorStack -> Result alpha tok
+    }
 
 instance Monad (Parser tok) where
   return !a = Parser $ \s _ -> Good a s
@@ -55,6 +59,7 @@ instance Eq tok => Syntax tok (Parser tok) where
                      t:ts -> Good t ts
                      []   -> Bad $ errorString "eof" : e)
 
+-- | Run 'Syntax' as @'Parser' tok@.
 runAsParser :: Eq tok => RunAsParser tok a ErrorStack
 runAsParser parser s = case runParser parser s [] of
   Good x []    -> Right x

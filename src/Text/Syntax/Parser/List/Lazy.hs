@@ -10,9 +10,7 @@
 -- Stability   : experimental
 -- Portability : unknown
 --
--- This module includes a naive parser implementation for invertible-syntax-poly.
--- The same as Text.Syntax.Parser.List other than result Either type.
-
+-- This module includes a lazy parser implementation for "Text.Syntax.Poly".
 module Text.Syntax.Parser.List.Lazy (
   -- * Syntax instance Parser type
   Parser, runParser, ErrorStack,
@@ -28,9 +26,12 @@ import Text.Syntax.Poly.Class
   (TryAlternative, Syntax (..))
 import Text.Syntax.Parser.List.Type (RunAsParser, ErrorStack, errorString)
 
+-- | Naive 'Parser' type. Parse @[tok]@ into @alpha@.
 newtype Parser tok alpha =
-  Parser { runParser
-           :: [tok] -> ErrorStack -> Either ErrorStack (alpha, [tok]) }
+  Parser {
+    -- | Function to run parser
+    runParser :: [tok] -> ErrorStack -> Either ErrorStack (alpha, [tok])
+    }
 
 instance Monad (Parser tok) where
   return a = Parser $ \s _ -> Right (a, s)
@@ -52,6 +53,7 @@ instance Eq tok => Syntax tok (Parser tok) where
                      t:ts -> Right (t, ts)
                      []   -> Left $ errorString "The end of token stream." : e)
 
+-- | Run 'Syntax' as @'Parser' tok@.
 runAsParser :: Eq tok => RunAsParser tok a ErrorStack
 runAsParser parser s =
   do (a, s') <- runParser parser s []

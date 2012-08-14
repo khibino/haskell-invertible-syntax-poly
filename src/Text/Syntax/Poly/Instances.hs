@@ -21,18 +21,21 @@ import Text.Syntax.Poly.Class
    IsoAlternative((<||>), empty), TryAlternative,
    AbstractSyntax(syntax, syntaxError))
 
--- | Instances on MonadPlus contexts 
--- which are prerequisites for syntax definitions
-
+-- | 'ProductFunctor' instance on 'Monad' context
+-- which is a prerequisite for 'Syntax' definitions.
 instance Monad m => ProductFunctor m where
   ma <*> mb = do a <- ma
                  b <- mb
                  return (a, b)
 
+-- | 'IsoAlternative' instance on 'MonadPlus' context
+-- which is a prerequisite for 'Syntax' definitions.
 instance MonadPlus m => IsoAlternative m where
   (<||>) = mplus
   empty  = mzero
 
+-- | 'AbstractSyntax' instance on 'MonadPlus' context
+-- which is a prerequisite for 'Syntax' definitions.
 instance (IsoFunctor m, MonadPlus m, TryAlternative m) => AbstractSyntax m where
   syntax = return
   syntaxError = fail

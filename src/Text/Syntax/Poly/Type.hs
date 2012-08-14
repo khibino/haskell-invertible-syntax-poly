@@ -11,7 +11,7 @@
 --
 -- This module contains handy Rank2 type synonyms which has 'Syntax' contexts.
 module Text.Syntax.Poly.Type (
-  -- * 'Syntax' type
+  -- * Syntax type
   SyntaxT,
   -- * Type to run syntax as Parser \/ Printer.
   RunAsParser, RunAsParserM,
@@ -22,7 +22,7 @@ module Text.Syntax.Poly.Type (
 
 import Text.Syntax.Poly.Class (Syntax)
 
--- | Syntax type synonym includes contexts. Rank2Types extension is needed.
+-- | Type synonym for 'Syntax' includes contexts. Rank2Types extension is needed.
 type SyntaxT tok a = forall delta . Syntax tok delta => delta a
 
 -- | Type to run syntax as parser
@@ -35,10 +35,10 @@ type RunAsPrinter    tok tks a e = SyntaxT tok a -> a   -> Either e tks
 -- | Same as 'RunAsPrinter' other than with computation @m@
 type RunAsPrinterM m tok tks a e = SyntaxT tok a -> a   -> m (Either e tks)
 
--- | String type which is Show instance not to show but just return string
+-- | String type which is 'Show' instance not to show but just return String
 newtype ErrorString = ErrorString String
 
--- | Construct ErrorString
+-- | Construct 'ErrorString'
 errorString :: String -> ErrorString
 errorString =  ErrorString
 

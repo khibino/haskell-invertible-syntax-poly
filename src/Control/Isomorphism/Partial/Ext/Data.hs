@@ -80,12 +80,14 @@ hex =  Iso f g where
   f =  fmap fst . listToMaybe . readHex
   g =  Just . (`showHex` "")
 
+-- | Isomorphism between 'signum', 'abs' pair and number
 signumAbs :: (Num a, Eq a) => Iso (a, a) a
 signumAbs =  iso f g  where
   f (x, y) = x * y
   g 0      = (1, 0)
   g v      = (signum v, abs v)
 
+-- | 'floatToDigits' and that's inverse.
 digitsFloat :: RealFloat a => Iso ([Int], Int) a
 digitsFloat =  iso f g where
   f (ds, e) | e' >= 0   = dv * 10 ^ e'
@@ -94,10 +96,12 @@ digitsFloat =  iso f g where
           e' = e - length ds
   g = floatToDigits 10
 
+-- | Float Triple is (int part, (fraction part, exponent)), and Digits is result of 'floatToDigits'
 floatTripleDigits :: Iso (String, (String, Int)) ([Int], Int)
 floatTripleDigits =  iso p q  where
   p (i, (f, e)) = (map digitToInt (i ++ f), length i + e)
   q (ds, e)     = ("", (map intToDigit ds, e))
 
+-- | Isomorphism between Float Triple and floating number
 floatTriple :: RealFloat a => Iso (String, (String, Int)) a
 floatTriple =  digitsFloat . floatTripleDigits

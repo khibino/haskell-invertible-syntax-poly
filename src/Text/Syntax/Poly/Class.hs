@@ -20,27 +20,27 @@ module Text.Syntax.Poly.Class (
 
 import Control.Isomorphism.Partial (IsoFunctor)
 
--- | Apply `IsoFunctor` to another argument with uncurried style.
+-- | Apply 'IsoFunctor' to another argument with uncurried style.
 class ProductFunctor f where
   (<*>) :: f alpha -> f beta -> f (alpha, beta)
 
 infixr 6 <*>
 
--- | Monoid class for `IsoFunctor`
+-- | Monoid class for 'IsoFunctor'
 class IsoAlternative f where
-  -- | like `MonadPlus`(`mplus`) or Alternative ((`<|>`))
+  -- | like MonadPlus (mplus) or Alternative ((\<|\>))
   (<||>) :: f alpha -> f alpha -> f alpha
   empty  :: f alpha
 
 -- | Support try for combinators which semantics is like Parsec
 class IsoAlternative f => TryAlternative f where
   {- | This method should be implemented for combinators
-       which semantics is not full-backtracking like Parsec.
+       which semantics is not full-backtracking like parsec.
        ex. @try = Text.Parsec.try@ -}
   try   :: f alpha -> f alpha
   try   =  id
   {- | This method should be implemented for combinators
-       which semantics is not full-backtracking like Parsec.
+       which semantics is not full-backtracking like parsec.
        ex. @p <|> q = try p <||> q@ -}
   (<|>) :: f alpha -> f alpha -> f alpha
   (<|>) = (<||>)

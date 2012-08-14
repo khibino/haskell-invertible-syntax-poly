@@ -11,9 +11,8 @@
 -- Stability   : experimental
 -- Portability : unknown
 --
--- This module includes a naive parser implementation for invertible-syntax-poly.
--- composed parser function is not cached and composed every needed time.
-
+-- This module includes a naive parser implementation for "Text.Syntax.Poly".
+-- Composed parser functions are not cached and composed every time by needed.
 module Text.Syntax.Parser.List.Compose (
   -- * Syntax instance Parser type
   Parser, runParser, Result,
@@ -28,6 +27,7 @@ import Text.Syntax.Poly.Class
   (TryAlternative, Syntax (token))
 import Text.Syntax.Parser.List.Type (RunAsParser, ErrorString, errorString)
 
+-- | Result type of 'Parser'
 data Result a tok = Good !a ![tok] | Bad
 
 maybeOfResult :: Result a tok -> Maybe a
@@ -36,11 +36,13 @@ maybeOfResult =  d  where
   d (Good _ (_:_)) = Nothing
   d Bad            = Nothing
 
+-- | Constructive 'Parser' type. Parse @[tok]@ into @alpha@.
 data Parser tok alpha =
   forall beta . Parser tok beta :>>= (beta -> Parser tok alpha) |
   Parser tok alpha              :<|> Parser tok alpha           |
   Prim ([tok] -> Result alpha tok)
 
+-- | Function to run parser
 runParser :: Parser tok alpha -> [tok] -> Result alpha tok
 runParser p0 s0 = let z = d p0 s0 in z `seq` z  where
   d (Prim p)     s = p s
@@ -69,6 +71,7 @@ instance Eq tok => Syntax tok (Parser tok) where
                    t:ts -> Good t ts
                    []   -> Bad)
 
+-- | Run 'Syntax' as @'Parser' tok@.
 runAsParser :: Eq tok => RunAsParser tok a ErrorString
 runAsParser parser = maybe (Left . errorString $ "parse error") Right
                      . maybeOfResult . runParser parser

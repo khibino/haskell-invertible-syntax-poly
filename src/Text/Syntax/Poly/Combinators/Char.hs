@@ -28,7 +28,7 @@ import Text.Syntax.Poly.Class (Syntax, syntax, token)
 import Text.Syntax.Poly.Combinators
   (many, this, (<*), skipMany, skipSome)
 
--- | Syntax of passed char.
+-- | Syntax of passed 'Char'.
 char :: Syntax Char delta => Char -> delta Char
 char c = syntax c <* this c
 
@@ -44,20 +44,20 @@ dot =  this '.'
 space :: Syntax Char delta => delta Char
 space = subset isSpace <$> token
 
--- | `skipSpace` marks a position where whitespace is allowed to
--- occur. It accepts arbitrary space while parsing, and produces
+-- | 'skipSpace' marks a position where whitespace is allowed to occur.
+-- It accepts arbitrary space while parsing, and produces
 -- no space while printing. 
 skipSpace  ::  Syntax Char delta => delta ()
 skipSpace  =   skipMany space
 
--- | `optSpace` marks a position where whitespace is desired to occur.
+-- | 'optSpace' marks a position where whitespace is desired to occur.
 -- It accepts arbitrary space while parsing, and produces a 
 -- single space character while printing.
 optSpace  ::  Syntax Char delta => delta ()
 optSpace  =   ignore [' ']  <$>  many space
 
--- | `sepSpace` marks a position where whitespace is required to
--- occur. It requires one or more space characters while parsing, 
+-- | 'sepSpace' marks a position where whitespace is required to occur.
+-- It requires one or more space characters while parsing,
 -- and produces a single space character while printing.
 sepSpace  ::  Syntax Char delta => delta ()
 sepSpace  =   ignore ' ' <$> skipSome space

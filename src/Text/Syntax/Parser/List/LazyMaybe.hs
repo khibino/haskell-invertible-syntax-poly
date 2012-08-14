@@ -11,8 +11,7 @@
 -- Stability   : experimental
 -- Portability : unknown
 --
--- This module includes a naive parser implementation for invertible-syntax-poly.
-
+-- This module includes a lazy parser implementation for "Text.Syntax.Poly". Result does not have error informations.
 module Text.Syntax.Parser.List.LazyMaybe (
   -- * Syntax instance Parser type
   Parser, runParser,
@@ -27,8 +26,12 @@ import Text.Syntax.Poly.Class
   (TryAlternative, Syntax (token))
 import Text.Syntax.Parser.List.Type (RunAsParser, ErrorString, errorString)
 
+-- | Naive 'Parser' type. Parse @[tok]@ into @alpha@.
 newtype Parser tok alpha =
-  Parser { runParser :: [tok] -> Maybe (alpha, [tok]) }
+  Parser {
+    -- | Function to run parser
+    runParser :: [tok] -> Maybe (alpha, [tok])
+    }
 
 instance Monad (Parser tok) where
   return a = Parser $ \s -> Just (a, s)
@@ -48,6 +51,7 @@ instance Eq tok => Syntax tok (Parser tok) where
                      t:ts -> Just (t, ts)
                      []   -> Nothing)
 
+-- | Run 'Syntax' as @'Parser' tok@.
 runAsParser :: Eq tok => RunAsParser tok a ErrorString
 runAsParser parser s = case runParser parser s of
   Just (a, [])    -> Right a
