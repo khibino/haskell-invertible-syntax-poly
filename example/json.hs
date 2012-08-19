@@ -126,4 +126,6 @@ main =  do (fn:_) <- getArgs
              Left e       -> putStrLn $ "Parse error: " ++ show e
              Right parsed ->
                do putStrLn $ "parsed: " ++ show parsed
-                  putStrLn $ "printed: " ++ show (runStringPrinter s_text parsed)
+                  case runStringPrinter s_text parsed of
+                    Left e        -> putStrLn $ "Print error: " ++ show e
+                    Right printed -> putStrLn $ "printed:\n" ++ printed
