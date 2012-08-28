@@ -14,7 +14,19 @@ module Text.Syntax.Poly (
   -- * Invertible Syntax
   -- $invertibleSyntax
 
-  -- * Example
+  -- * How to use
+  -- $howToUse
+
+  -- ** How to define partial isomorphisms
+  -- $definePartialIsomorphisms
+
+  -- ** How to define invertible syntax
+  -- $howToDefine
+
+  -- ** Call defined invertible syntax
+  -- $howToCall
+
+  -- ** Example
   -- $jsonExample
 
   -- * Exported modules
@@ -34,13 +46,63 @@ import Text.Syntax.Poly.Combinators.Char
 {-# ANN module "ignore import/export shortcut" #-}
 
 {- $invertibleSyntax
-This library extended definition of invertible-syntax library 
+This library extended definition of invertible-syntax library
 
 <http://hackage.haskell.org/package/invertible-syntax>
 
 Define parser and printer in a single syntax definition.
 Major extended feature from original invertible-syntax implementation is
 that this library can use with polymorphic token type other than 'Char'.
+-}
+
+{- $howToUse
+To use invertible syntax,
+
+1. You may need to define isomorphisms.
+
+2. You need to define invertible syntax to use isomorphisms.
+
+3. And call defined invertible syntax as parser or printer.
+-}
+
+{- $definePartialIsomorphisms
+Convenient template-haskell function is provided to define partial isomorphisms which is needed to compose \/ destruct data types you want.
+
+> import Control.Isomorphism.Partial.TH (defineIsomorphisms)
+>
+> data Foo = ...
+>
+> $(defineIsomorphisms ''Foo)
+-}
+
+{- $howToDefine
+You can define invertible syntax like applicative style parser.
+
+> import Control.Isomorphism.Partial.Ext ((<$>))
+> import Text.Syntax.Poly ((<|>), (<*>))
+>
+> syntaxFoo = consFoo0 <$> syntaxFoo0Left <*> syntaxFoo0Right <|>
+>             consFoo1 <$> syntaxFoo1                         <|>
+>             ....
+
+-}
+
+{- $howToCall
+
+To call defined invertible syntax, you need parser \/ printer instances of Syntax class. For example ReadP is provided as instance of 'Syntax'.
+
+> import Text.Syntax.Parser.ReadP ()
+> import Text.ParserCombinators.ReadP (readP_to_S)
+> import Text.Syntax.Poly (Syntax)
+>
+> syntaxFoo :: Syntax Char delta => delta Foo
+> syntaxFoo =  ....
+>
+> ....
+>
+> -- 'Syntax Char delta => delta Foo' is super type of 'ReadP Foo'
+> parseFoo = readP_to_S syntaxFoo
+
 -}
 
 {- $jsonExample
