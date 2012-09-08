@@ -1,7 +1,8 @@
+{-# LANGUAGE TemplateHaskell #-}
 {-# LANGUAGE FlexibleContexts #-}
 {-# LANGUAGE Rank2Types #-}
 
-import JsonData
+import Control.Isomorphism.Partial.TH (defineIsomorphisms)
 
 import Prelude hiding ((.), negate, replicate)
 import Control.Isomorphism.Partial.Ext
@@ -16,6 +17,19 @@ import Text.Syntax.Parser.List.Lazy (runAsParser)
 import Text.Syntax.Printer.List (RunAsStringPrinter, runAsPrinter)
 
 import System.Environment (getArgs)
+
+
+data JValue = JString String
+            | JNumber Double
+            | JBool Bool
+            | JNull
+            | JObject [(String, JValue)]
+            | JArray [JValue]
+            deriving (Eq, Ord, Show)
+
+$(defineIsomorphisms ''JValue)
+$(defineIsomorphisms ''Bool)
+
 
 type JSyntax a = SyntaxT Char a
 
