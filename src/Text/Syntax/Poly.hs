@@ -23,10 +23,13 @@ module Text.Syntax.Poly (
   -- ** How to define invertible syntax
   -- $howToDefine
 
+  -- ** Use with parser combinator implementation which has try
+  -- $tryCombinators
+
   -- ** Call defined invertible syntax
   -- $howToCall
-
-  -- ** Example
+  
+  -- * Example
   -- $jsonExample
 
   -- * Exported modules
@@ -84,6 +87,16 @@ You can define invertible syntax like applicative style parser.
 > syntaxFoo = consFoo0 <$> syntaxFoo0Left <*> syntaxFoo0Right <|>
 >             consFoo1 <$> syntaxFoo1                         <|>
 >             ....
+
+-}
+
+{- $tryCombinators
+Syntax instance of parser combinator implementation which has 'try' combinator,
+implements combinator for alternative syntax '<|>' like below.
+
+> p <|> q = try p <||> q
+
+When you may want not to use try, use '<||>' instead of '<|>'.
 
 -}
 
